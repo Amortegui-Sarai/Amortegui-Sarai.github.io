@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Una cartita para ti 💌</title>
+  <title>Una cartita para ti </title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
   <style>
 
@@ -127,13 +127,13 @@
       background: linear-gradient(160deg, #f48fb1, #ec407a);
       clip-path: polygon(0 100%, 50% 0, 100% 100%);
     }
-    /* sello decorativo */
+    /* Sello decorativo */
     .seal {
       position: absolute;
       top: 52%; left: 50%;
       transform: translate(-50%, -50%);
       font-size: clamp(1.4rem, 5vw, 1.8rem);
-      z-index: 2;
+      z-index: 4;
       transition: opacity .3s ease;
     }
 
@@ -142,7 +142,7 @@
     ═══════════════════════════════════════ */
     .letter {
       position: absolute;
-      bottom: 8%;
+      bottom: 5%;
       left: 50%;
       transform: translateX(-50%) translateY(0);
       width: 90%;
@@ -152,8 +152,9 @@
       z-index: 2;
       opacity: 0;
       pointer-events: none;
-      transition: opacity .55s ease .35s,
-                  transform .65s cubic-bezier(.4,0,.2,1) .35s;
+      transition: opacity .55s ease .2s,
+                  transform .65s cubic-bezier(.4,0,.2,1) .2s,
+                  z-index 0s step-end .65s;
       box-shadow: 0 6px 28px rgba(181,0,91,.15);
       border: 1.5px solid #ffc2d4;
     }
@@ -161,34 +162,39 @@
 
     .letter h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      font-size: clamp(1.2rem, 4.5vw, 1.5rem);
       color: #b5005b;
       margin-bottom: 10px;
     }
     .letter p {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(0.88rem, 3.2vw, 1rem);
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
       color: #6b1a35;
-      line-height: 1.7;
+      line-height: 1.6;
       margin-bottom: 8px;
     }
     .firma {
       margin-top: 12px;
       color: #b5005b;
       font-style: italic;
-      font-size: clamp(0.85rem, 3vw, 0.96rem) !important;
+      font-size: clamp(0.9rem, 3.2vw, 1rem) !important;
     }
 
     /* ── Estado abierto ── */
     .envelope.open .flap {
       transform: rotateX(180deg);
       background: linear-gradient(160deg, #c0004a, #e8547a);
+      z-index: 1;
     }
     .envelope.open .seal { opacity: 0; }
     .envelope.open .letter {
       opacity: 1;
-      transform: translateX(-50%) translateY(-82%);
+      transform: translateX(-50%) translateY(-110%);
       pointer-events: auto;
+      z-index: 10;
+      transition: opacity .55s ease .2s,
+                  transform .65s cubic-bezier(.4,0,.2,1) .2s,
+                  z-index 0s step-start .2s;
     }
 
     /* ═══════════════════════════════════════
@@ -203,7 +209,6 @@
       margin-top: 8px;
     }
 
-    /* Base botón */
     .btn {
       border: none;
       border-radius: 50px;
@@ -219,7 +224,6 @@
     .btn:hover  { transform: translateY(-2px); filter: brightness(1.05); }
     .btn:active { transform: translateY(1px);  filter: brightness(.97);  }
 
-    /* Botón principal abrir/cerrar */
     .btn-main {
       background: linear-gradient(135deg, #e8547a, #b5005b);
       color: #fff;
@@ -227,21 +231,18 @@
       font-weight: 600;
     }
 
-    /* Botón "Léeme" */
     .btn-feel {
       background: linear-gradient(135deg, #ffd6e7, #ffb3cc);
       color: #8b0040;
       box-shadow: 0 4px 16px rgba(181,0,91,.18);
     }
 
-    /* Botón abrazo */
     .btn-hug {
       background: linear-gradient(135deg, #ffe0ec, #f9a8c0);
       color: #8b0040;
       box-shadow: 0 4px 16px rgba(181,0,91,.18);
     }
 
-    /* Botón WhatsApp */
     .btn-wa {
       background: linear-gradient(135deg, #25d366, #128c7e);
       color: #fff;
@@ -320,7 +321,7 @@
     .btn-close-modal:active { transform: translateY(1px);  }
 
     /* ═══════════════════════════════════════
-       ABRAZO VIRTUAL — corazones cayendo
+       ABRAZO VIRTUAL
     ═══════════════════════════════════════ */
     .hug-overlay {
       position: fixed;
@@ -343,7 +344,6 @@
       100% { opacity: 0;   transform: translateY(105vh) rotate(20deg) scale(1.1); }
     }
 
-    /* ── Banner de abrazo ── */
     .hug-banner {
       position: fixed;
       top: 50%;
@@ -395,7 +395,7 @@
   <!-- Overlay abrazo -->
   <div class="hug-overlay" id="hugOverlay"></div>
   <div class="hug-banner" id="hugBanner">
-    <p>🫂 Aquí tienes un abrazo enorme,<br/>tan cálido como mi cariño por ti 💕</p>
+    <p>Te mando un abrazooo,<br/>pero no hay nada más lindo que un abrazo realll</p>
   </div>
 
   <!-- Modal "Léeme si te sientes mal" -->
@@ -403,11 +403,12 @@
     <div class="modal-box">
       <div class="modal-icon">🥺💗</div>
       <h3>Oye, escúchame...</h3>
-      <p>Sé que a veces los días se sienten pesados y el corazón cansa. Pero quiero que sepas que no estás sola en esto.</p>
-      <p>Eres más fuerte de lo que crees, más valiosa de lo que imaginas y más amada de lo que sientes en este momento.</p>
-      <p>Respira. Este momento difícil va a pasar. Y yo aquí sigo, siempre. 🌸</p>
-      <p style="color:#b5005b; font-weight:700;">Te quiero muchísimo. 💖</p>
-      <button class="btn-close-modal" onclick="closeModal('feelModal')">Un besito y a seguir 🌹</button>
+      <!-- EDITAR MENSAJE DEL MODAL -->
+      <p>Yo sé que hay dias donde no tienes animos de nada flaquito pero quiero que sepas que estaré para ti</p>
+      <p>Tu puedes con todo lo que te venga encima, siempre has podido.</p>
+      <p>Spiderman es demasiado fuertee</p>
+      <p style="color:#b5005b; font-weight:700;">Te quiero flaco</p>
+      <button class="btn-close-modal" onclick="closeModal('feelModal')">Besitoooo</button>
     </div>
   </div>
 
@@ -415,7 +416,7 @@
   <div class="container">
 
     <h1 class="title">Para ti 💌</h1>
-    <p class="subtitle">Toca el sobre para abrir tu mensaje</p>
+    <p class="subtitle">Toca el sobre</p>
 
     <!-- Escena del sobre -->
     <div class="envelope-scene">
@@ -429,12 +430,17 @@
         <!-- Carta -->
         <div class="letter">
           <div class="letter-icon">💖</div>
-          <h2>Spiderman,</h2>
+          <!-- EDITAR TÍTULO DE LA CARTA -->
+          <h2>Para tii que eres especial,</h2>
+          <!-- EDITAR TEXTO DE LA CARTA -->
           <p>
-            Me caes muyy mal pero qué bonito
-            hacer parte de tu vida.
+            Solo quería pasarme por aquí para sacarte una sonrisa y recordarte lo importante que eres para mí. 
           </p>
-          <p class="firma">Att: <strong>Merry Jein 🌹</strong></p>
+          <p>
+            Gracias por estar conmigo, agradezco tu existencia en mi vida
+          </p>
+          <!-- EDITAR FIRMA -->
+          <p class="firma">De: <strong>La merry jeinnn</strong></p>
         </div>
 
       </div>
@@ -447,25 +453,23 @@
       </button>
 
       <button class="btn btn-feel" onclick="openModal('feelModal')">
-        Léeme si te sientes mal 🥺
+        Léeme si te sientes mall
       </button>
 
       <button class="btn btn-hug" onclick="triggerHug()">
-        Un abrazo virtual 🫂
+        Abrazooo virtual 
       </button>
 
       <button class="btn btn-wa" onclick="openWhatsApp()">
-        Responder por WhatsApp 💬
+        Escribemeee
       </button>
     </div>
 
-  </div><!-- /container -->
+  </div>
 
   <script>
 
-    /* ═══════════════════════════════════════
-       PARTÍCULAS FLOTANTES DE FONDO
-    ═══════════════════════════════════════ */
+    /* PARTÍCULAS FLOTANTES DE FONDO */
     (function () {
       const container = document.getElementById('bgParticles');
       const symbols   = ['💕','💗','💓','🌸','🌷','✨','💖','🩷','🫧'];
@@ -481,9 +485,7 @@
       }
     })();
 
-    /* ═══════════════════════════════════════
-       ABRIR / CERRAR SOBRE
-    ═══════════════════════════════════════ */
+    /* ABRIR / CERRAR SOBRE */
     let isOpen = false;
 
     function toggleEnvelope() {
@@ -501,12 +503,9 @@
       }
     }
 
-    /* También se puede tocar el sobre directamente */
     document.getElementById('envelope').addEventListener('click', toggleEnvelope);
 
-    /* ═══════════════════════════════════════
-       EXPLOSIÓN DE CORAZONES AL ABRIR
-    ═══════════════════════════════════════ */
+    /* EXPLOSIÓN DE CORAZONES AL ABRIR */
     function burstHearts() {
       const symbols = ['💖','💗','💕','✨','🌸','❤️','🩷','💓'];
       const rect    = document.getElementById('envelope').getBoundingClientRect();
@@ -531,29 +530,23 @@
       }
     }
 
-    /* ═══════════════════════════════════════
-       MODAL LÉEME
-    ═══════════════════════════════════════ */
+    /* MODAL LÉEME */
     function openModal(id) {
       document.getElementById(id).classList.add('visible');
     }
     function closeModal(id) {
       document.getElementById(id).classList.remove('visible');
     }
-    /* Cerrar tocando fuera del box */
     document.getElementById('feelModal').addEventListener('click', function (e) {
       if (e.target === this) closeModal('feelModal');
     });
 
-    /* ═══════════════════════════════════════
-       ABRAZO VIRTUAL
-    ═══════════════════════════════════════ */
+    /* ABRAZO VIRTUAL */
     function triggerHug() {
       const overlay = document.getElementById('hugOverlay');
       const banner  = document.getElementById('hugBanner');
       const symbols = ['🫂','💕','💗','💓','🌸','💖','🩷','✨'];
 
-      /* Lluvia de corazones */
       for (let i = 0; i < 30; i++) {
         const el = document.createElement('span');
         el.classList.add('hug-heart');
@@ -567,18 +560,15 @@
         el.addEventListener('animationend', () => el.remove());
       }
 
-      /* Banner central */
       banner.classList.add('show');
       setTimeout(() => banner.classList.remove('show'), 3200);
     }
 
-    /* ═══════════════════════════════════════
-       WHATSAPP
-       Cambia el número por el tuyo (con código de país, sin + ni espacios)
-    ═══════════════════════════════════════ */
+    /* WHATSAPP */
     function openWhatsApp() {
-      const numero  = '573122683028'; /* 🔧 CAMBIA ESTE NÚMERO */
-      const mensaje = encodeURIComponent('Holaaaa);
+      /* EDITAR NÚMERO (con código de país, sin espacios ni signo +) */
+      const numero  = '573122683028'; 
+      const mensaje = encodeURIComponent('Holaaaaaa');
       window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
     }
 
