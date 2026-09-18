@@ -3,248 +3,487 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cartaaaaa</title>
+  <title>Una cartita para ti 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset ── */
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #ffe0ec 0%, #ffc2d4 50%, #ffb3c6 100%);
-      font-family: 'Georgia', serif;
+      background: linear-gradient(160deg, #fff0f5 0%, #ffd6e7 50%, #ffb3cc 100%);
+      font-family: 'Playfair Display', Georgia, serif;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow-x: hidden;
+      padding: 30px 16px 60px;
     }
 
-    /* ── Corazones flotantes de fondo ── */
-    .hearts-bg {
+    /* ═══════════════════════════════════════
+       PARTÍCULAS FLOTANTES DE FONDO
+    ═══════════════════════════════════════ */
+    .bg-particles {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
     }
-    .heart-particle {
+    .particle {
       position: absolute;
       bottom: -60px;
       opacity: 0;
       animation: floatUp linear infinite;
+      user-select: none;
     }
     @keyframes floatUp {
-      0%   { transform: translateY(0)      scale(0.8); opacity: 0.75; }
-      100% { transform: translateY(-110vh) scale(1.2); opacity: 0;    }
+      0%   { transform: translateY(0) rotate(0deg)   scale(0.8); opacity: 0.8; }
+      100% { transform: translateY(-115vh) rotate(30deg) scale(1.1); opacity: 0; }
     }
 
-    /* ── Contenedor ── */
+    /* ═══════════════════════════════════════
+       CONTENEDOR PRINCIPAL
+    ═══════════════════════════════════════ */
     .container {
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 120px 16px 32px 16px;
       width: 100%;
-      max-width: 480px;
-    }
-
-    .title {
-      font-size: clamp(1.8rem, 6vw, 2.6rem);
-      color: #c0004a;
-      text-shadow: 0 2px 6px rgba(192,0,74,.25);
-      margin-bottom: 6px;
-      letter-spacing: 1px;
-    }
-    .subtitle {
-      font-size: clamp(0.85rem, 3vw, 1rem);
-      color: #b5476f;
-      margin-bottom: 36px;
-    }
-
-    /* ── Wrapper ── */
-    .envelope-wrapper {
+      max-width: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 28px;
+      gap: 10px;
     }
 
-    /* ── Sobre ── */
-    .envelope {
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 7vw, 2.8rem);
+      color: #b5005b;
+      text-shadow: 0 2px 8px rgba(181,0,91,.2);
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(0.82rem, 3vw, 0.95rem);
+      color: #c2607e;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    /* ═══════════════════════════════════════
+       SOBRE
+    ═══════════════════════════════════════ */
+    .envelope-scene {
       position: relative;
-      width: min(320px, 88vw);
-      height: min(210px, 58vw);
+      width: min(300px, 86vw);
+      height: min(195px, 56vw);
+      margin: 6px 0 4px;
+    }
+
+    .envelope {
+      position: absolute;
+      inset: 0;
       cursor: pointer;
-      filter: drop-shadow(0 8px 24px rgba(192,0,74,.3));
+      filter: drop-shadow(0 10px 28px rgba(181,0,91,.28));
       transition: transform .2s ease;
     }
     .envelope:hover { transform: scale(1.03); }
 
-    /* Tapa triangular */
-    .envelope-flap {
+    /* Tapa */
+    .flap {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 55%;
-      background: #e8547a;
+      background: linear-gradient(160deg, #f472a8, #e8547a);
       clip-path: polygon(0 0, 50% 100%, 100% 0);
       transform-origin: top center;
       transform: rotateX(0deg);
-      transition: transform .6s ease, background .3s ease;
+      transition: transform .65s cubic-bezier(.4,0,.2,1),
+                  background .3s ease;
       z-index: 3;
-      border-radius: 6px 6px 0 0;
+      border-radius: 8px 8px 0 0;
     }
 
     /* Cuerpo */
-    .envelope-body {
+    .env-body {
       position: absolute;
       bottom: 0; left: 0;
       width: 100%; height: 100%;
-      background: #f9a8c0;
-      border-radius: 6px;
+      background: linear-gradient(180deg, #f9a8c0 0%, #f472a8 100%);
+      border-radius: 8px;
       z-index: 1;
       overflow: hidden;
     }
-    .envelope-pocket {
+    .env-pocket {
       position: absolute;
       bottom: 0; left: 0;
       width: 100%; height: 55%;
-      background: #f48fb1;
+      background: linear-gradient(160deg, #f48fb1, #ec407a);
       clip-path: polygon(0 100%, 50% 0, 100% 100%);
-      z-index: 4;
+    }
+    /* sello decorativo */
+    .seal {
+      position: absolute;
+      top: 52%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      z-index: 2;
+      transition: opacity .3s ease;
     }
 
-    /* ── Carta ── */
+    /* ═══════════════════════════════════════
+       CARTA
+    ═══════════════════════════════════════ */
     .letter {
       position: absolute;
-      bottom: 10%;
+      bottom: 8%;
       left: 50%;
       transform: translateX(-50%) translateY(0);
-      width: 88%;
-      background: #fff5f8;
-      border-radius: 10px;
-      padding: 20px 18px;
+      width: 90%;
+      background: linear-gradient(160deg, #fff8fb, #fff0f5);
+      border-radius: 12px;
+      padding: 22px 18px 18px;
       z-index: 2;
       opacity: 0;
-      transition: opacity .5s ease .4s, transform .6s ease .4s, z-index 0s .4s;
-      box-shadow: 0 4px 20px rgba(192,0,74,.15);
       pointer-events: none;
+      transition: opacity .55s ease .35s,
+                  transform .65s cubic-bezier(.4,0,.2,1) .35s;
+      box-shadow: 0 6px 28px rgba(181,0,91,.15);
+      border: 1.5px solid #ffc2d4;
     }
-    .letter-heart { font-size: 2rem; margin-bottom: 10px; }
-    .letter-content h2 {
-      color: #c0004a;
-      font-size: 1.15rem;
+    .letter-icon { font-size: 1.8rem; margin-bottom: 8px; }
+
+    .letter h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      color: #b5005b;
       margin-bottom: 10px;
     }
-    .letter-content p {
-      color: #5c1a33;
-      font-size: 0.95rem;
-      line-height: 1.65;
-      margin-bottom: 10px;
+    .letter p {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(0.88rem, 3.2vw, 1rem);
+      color: #6b1a35;
+      line-height: 1.7;
+      margin-bottom: 8px;
     }
     .firma {
-      margin-top: 14px;
-      color: #a0003e;
+      margin-top: 12px;
+      color: #b5005b;
       font-style: italic;
-      font-size: 0.9rem !important;
+      font-size: clamp(0.85rem, 3vw, 0.96rem) !important;
     }
 
     /* ── Estado abierto ── */
-    .envelope.open .envelope-flap {
+    .envelope.open .flap {
       transform: rotateX(180deg);
-      background: #c0004a;
-      z-index: 1;
+      background: linear-gradient(160deg, #c0004a, #e8547a);
     }
+    .envelope.open .seal { opacity: 0; }
     .envelope.open .letter {
       opacity: 1;
-      transform: translateX(-50%) translateY(-85%);
-      z-index: 10;
+      transform: translateX(-50%) translateY(-82%);
       pointer-events: auto;
     }
 
-    /* ── Botón ── */
+    /* ═══════════════════════════════════════
+       BOTONES
+    ═══════════════════════════════════════ */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    /* Base botón */
     .btn {
-      background: linear-gradient(135deg, #e8547a, #c0004a);
+      border: none;
+      border-radius: 50px;
+      padding: 13px 28px;
+      font-size: clamp(0.88rem, 3.2vw, 0.98rem);
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      letter-spacing: .4px;
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color: transparent;
+      width: min(320px, 90vw);
+    }
+    .btn:hover  { transform: translateY(-2px); filter: brightness(1.05); }
+    .btn:active { transform: translateY(1px);  filter: brightness(.97);  }
+
+    /* Botón principal abrir/cerrar */
+    .btn-main {
+      background: linear-gradient(135deg, #e8547a, #b5005b);
+      color: #fff;
+      box-shadow: 0 5px 20px rgba(181,0,91,.35);
+      font-weight: 600;
+    }
+
+    /* Botón "Léeme" */
+    .btn-feel {
+      background: linear-gradient(135deg, #ffd6e7, #ffb3cc);
+      color: #8b0040;
+      box-shadow: 0 4px 16px rgba(181,0,91,.18);
+    }
+
+    /* Botón abrazo */
+    .btn-hug {
+      background: linear-gradient(135deg, #ffe0ec, #f9a8c0);
+      color: #8b0040;
+      box-shadow: 0 4px 16px rgba(181,0,91,.18);
+    }
+
+    /* Botón WhatsApp */
+    .btn-wa {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: #fff;
+      box-shadow: 0 5px 20px rgba(18,140,126,.35);
+    }
+
+    /* ═══════════════════════════════════════
+       MODAL BASE
+    ═══════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(181,0,91,.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .modal-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: linear-gradient(160deg, #fff8fb, #fff0f5);
+      border-radius: 20px;
+      padding: 32px 26px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 12px 48px rgba(181,0,91,.22);
+      border: 1.5px solid #ffc2d4;
+      transform: scale(.9) translateY(10px);
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    .modal-overlay.visible .modal-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-icon { font-size: 2.8rem; margin-bottom: 12px; }
+
+    .modal-box h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: #b5005b;
+      margin-bottom: 14px;
+    }
+    .modal-box p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1rem;
+      color: #6b1a35;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .btn-close-modal {
+      margin-top: 18px;
+      background: linear-gradient(135deg, #e8547a, #b5005b);
       color: #fff;
       border: none;
       border-radius: 50px;
-      padding: 14px 36px;
-      font-size: clamp(0.95rem, 3.5vw, 1.05rem);
-      font-family: inherit;
+      padding: 11px 30px;
+      font-family: 'Playfair Display', serif;
+      font-size: .95rem;
       cursor: pointer;
-      letter-spacing: .5px;
-      box-shadow: 0 4px 18px rgba(192,0,74,.35);
-      transition: transform .15s ease, box-shadow .15s ease;
-      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 4px 16px rgba(181,0,91,.3);
+      transition: transform .15s, filter .15s;
     }
-    .btn:hover  { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(192,0,74,.45); }
-    .btn:active { transform: translateY(1px);  box-shadow: 0 2px 10px rgba(192,0,74,.3);  }
+    .btn-close-modal:hover  { transform: translateY(-1px); filter: brightness(1.06); }
+    .btn-close-modal:active { transform: translateY(1px);  }
 
-    /* ── Explosión de corazones ── */
+    /* ═══════════════════════════════════════
+       ABRAZO VIRTUAL — corazones cayendo
+    ═══════════════════════════════════════ */
+    .hug-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 400;
+      overflow: hidden;
+    }
+    .hug-heart {
+      position: absolute;
+      top: -60px;
+      font-size: 1.8rem;
+      opacity: 0;
+      animation: fallDown linear forwards;
+    }
+    @keyframes fallDown {
+      0%   { opacity: 0;   transform: translateY(0)    rotate(0deg)  scale(.7); }
+      15%  { opacity: 1; }
+      85%  { opacity: 1; }
+      100% { opacity: 0;   transform: translateY(105vh) rotate(20deg) scale(1.1); }
+    }
+
+    /* ── Banner de abrazo ── */
+    .hug-banner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(.8);
+      background: linear-gradient(160deg, #fff0f5, #ffd6e7);
+      border: 2px solid #ffc2d4;
+      border-radius: 20px;
+      padding: 24px 28px;
+      text-align: center;
+      z-index: 450;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .4s ease, transform .4s cubic-bezier(.4,0,.2,1);
+      box-shadow: 0 10px 40px rgba(181,0,91,.2);
+    }
+    .hug-banner.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .hug-banner p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.25rem;
+      color: #b5005b;
+    }
+
+    /* ═══════════════════════════════════════
+       EXPLOSIÓN AL ABRIR
+    ═══════════════════════════════════════ */
     .burst-heart {
       position: fixed;
       font-size: 1.6rem;
       pointer-events: none;
-      animation: burst 1s ease-out forwards;
-      z-index: 999;
+      animation: burst .9s ease-out forwards;
+      z-index: 600;
     }
     @keyframes burst {
-      0%   { opacity: 1; transform: scale(.5)  translate(0, 0); }
-      100% { opacity: 0; transform: scale(1.4) translate(var(--tx), var(--ty)); }
+      0%   { opacity: 1; transform: scale(.5)  translate(0,0); }
+      100% { opacity: 0; transform: scale(1.5) translate(var(--tx), var(--ty)); }
     }
+
   </style>
 </head>
 <body>
 
-  <div class="hearts-bg" id="heartsBg"></div>
+  <!-- Partículas de fondo -->
+  <div class="bg-particles" id="bgParticles"></div>
 
-  <div class="container">
-    <h1 class="title">Hola</h1>
-    <p class="subtitle">Toca el sobre para abrir</p>
+  <!-- Overlay abrazo -->
+  <div class="hug-overlay" id="hugOverlay"></div>
+  <div class="hug-banner" id="hugBanner">
+    <p>🫂 Aquí tienes un abrazo enorme,<br/>tan cálido como mi cariño por ti 💕</p>
+  </div>
 
-    <div class="envelope-wrapper">
-
-      <div class="envelope" id="envelope">
-        <div class="envelope-flap"></div>
-        <div class="envelope-body">
-          <div class="envelope-pocket"></div>
-        </div>
-
-        <div class="letter" id="letter">
-          <div class="letter-content">
-            <div class="letter-heart">💖</div>
-            <h2>Spiderman,</h2>
-            <p>
-              Me caes muyy mal pero que bonito hacer parte de tu vida.
-            </p>
-            <p class="firma">Att<br /><strong>Merry Jein</strong></p>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn" id="mainBtn" onclick="toggleEnvelope()">
-        ✉️ Abrir carta
-      </button>
-
+  <!-- Modal "Léeme si te sientes mal" -->
+  <div class="modal-overlay" id="feelModal">
+    <div class="modal-box">
+      <div class="modal-icon">🥺💗</div>
+      <h3>Oye, escúchame...</h3>
+      <p>Sé que a veces los días se sienten pesados y el corazón cansa. Pero quiero que sepas que no estás sola en esto.</p>
+      <p>Eres más fuerte de lo que crees, más valiosa de lo que imaginas y más amada de lo que sientes en este momento.</p>
+      <p>Respira. Este momento difícil va a pasar. Y yo aquí sigo, siempre. 🌸</p>
+      <p style="color:#b5005b; font-weight:700;">Te quiero muchísimo. 💖</p>
+      <button class="btn-close-modal" onclick="closeModal('feelModal')">Un besito y a seguir 🌹</button>
     </div>
   </div>
 
+  <!-- Contenedor principal -->
+  <div class="container">
+
+    <h1 class="title">Para ti 💌</h1>
+    <p class="subtitle">Toca el sobre para abrir tu mensaje</p>
+
+    <!-- Escena del sobre -->
+    <div class="envelope-scene">
+      <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="env-body">
+          <div class="env-pocket"></div>
+        </div>
+        <div class="seal">💝</div>
+
+        <!-- Carta -->
+        <div class="letter">
+          <div class="letter-icon">💖</div>
+          <h2>Spiderman,</h2>
+          <p>
+            Me caes muyy mal pero qué bonito
+            hacer parte de tu vida.
+          </p>
+          <p class="firma">Att: <strong>Merry Jein 🌹</strong></p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="btn-group">
+      <button class="btn btn-main" id="mainBtn" onclick="toggleEnvelope()">
+        ✉️ Abrir carta
+      </button>
+
+      <button class="btn btn-feel" onclick="openModal('feelModal')">
+        Léeme si te sientes mal 🥺
+      </button>
+
+      <button class="btn btn-hug" onclick="triggerHug()">
+        Un abrazo virtual 🫂
+      </button>
+
+      <button class="btn btn-wa" onclick="openWhatsApp()">
+        Responder por WhatsApp 💬
+      </button>
+    </div>
+
+  </div><!-- /container -->
+
   <script>
-    /* ── Corazones flotantes ── */
+
+    /* ═══════════════════════════════════════
+       PARTÍCULAS FLOTANTES DE FONDO
+    ═══════════════════════════════════════ */
     (function () {
-      const container = document.getElementById('heartsBg');
-      const symbols   = ['💕','💗','💓','✨','🌸','💖','❤️'];
-      for (let i = 0; i < 18; i++) {
+      const container = document.getElementById('bgParticles');
+      const symbols   = ['💕','💗','💓','🌸','🌷','✨','💖','🩷','🫧'];
+      for (let i = 0; i < 22; i++) {
         const el = document.createElement('span');
-        el.classList.add('heart-particle');
-        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        el.style.left              = Math.random() * 100 + 'vw';
-        el.style.animationDuration = (6 + Math.random() * 8)  + 's';
-        el.style.animationDelay    = (Math.random() * 10)      + 's';
-        el.style.fontSize          = (1 + Math.random() * 1.2) + 'rem';
+        el.classList.add('particle');
+        el.textContent              = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left               = Math.random() * 100 + 'vw';
+        el.style.animationDuration  = (7 + Math.random() * 9)  + 's';
+        el.style.animationDelay     = (Math.random() * 12)      + 's';
+        el.style.fontSize           = (.9 + Math.random() * 1.3) + 'rem';
         container.appendChild(el);
       }
     })();
 
-    /* ── Abrir / cerrar sobre ── */
+    /* ═══════════════════════════════════════
+       ABRIR / CERRAR SOBRE
+    ═══════════════════════════════════════ */
     let isOpen = false;
 
     function toggleEnvelope() {
@@ -262,32 +501,87 @@
       }
     }
 
+    /* También se puede tocar el sobre directamente */
     document.getElementById('envelope').addEventListener('click', toggleEnvelope);
 
-    /* ── Explosión de corazones ── */
+    /* ═══════════════════════════════════════
+       EXPLOSIÓN DE CORAZONES AL ABRIR
+    ═══════════════════════════════════════ */
     function burstHearts() {
-      const symbols = ['💖','💗','💕','✨','🌸','❤️','💓'];
+      const symbols = ['💖','💗','💕','✨','🌸','❤️','🩷','💓'];
       const rect    = document.getElementById('envelope').getBoundingClientRect();
-      const startX  = rect.left + rect.width  / 2;
-      const startY  = rect.top  + rect.height / 2;
+      const cx      = rect.left + rect.width  / 2;
+      const cy      = rect.top  + rect.height / 2;
 
-      for (let i = 0; i < 20; i++) {
-        const el    = document.createElement('span');
+      for (let i = 0; i < 22; i++) {
+        const el = document.createElement('span');
         el.classList.add('burst-heart');
-        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        el.style.left  = startX + 'px';
-        el.style.top   = startY + 'px';
+        el.textContent    = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left     = cx + 'px';
+        el.style.top      = cy + 'px';
 
         const angle = Math.random() * 2 * Math.PI;
-        const dist  = 80 + Math.random() * 140;
+        const dist  = 80 + Math.random() * 150;
         el.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
         el.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
-        el.style.animationDelay = (Math.random() * 0.3) + 's';
+        el.style.animationDelay = Math.random() * .35 + 's';
 
         document.body.appendChild(el);
         el.addEventListener('animationend', () => el.remove());
       }
     }
+
+    /* ═══════════════════════════════════════
+       MODAL LÉEME
+    ═══════════════════════════════════════ */
+    function openModal(id) {
+      document.getElementById(id).classList.add('visible');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('visible');
+    }
+    /* Cerrar tocando fuera del box */
+    document.getElementById('feelModal').addEventListener('click', function (e) {
+      if (e.target === this) closeModal('feelModal');
+    });
+
+    /* ═══════════════════════════════════════
+       ABRAZO VIRTUAL
+    ═══════════════════════════════════════ */
+    function triggerHug() {
+      const overlay = document.getElementById('hugOverlay');
+      const banner  = document.getElementById('hugBanner');
+      const symbols = ['🫂','💕','💗','💓','🌸','💖','🩷','✨'];
+
+      /* Lluvia de corazones */
+      for (let i = 0; i < 30; i++) {
+        const el = document.createElement('span');
+        el.classList.add('hug-heart');
+        el.textContent             = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left              = Math.random() * 100 + 'vw';
+        el.style.fontSize          = (1.2 + Math.random() * 1.4) + 'rem';
+        const dur                  = 2.2 + Math.random() * 2;
+        el.style.animationDuration = dur + 's';
+        el.style.animationDelay    = Math.random() * 1.2 + 's';
+        overlay.appendChild(el);
+        el.addEventListener('animationend', () => el.remove());
+      }
+
+      /* Banner central */
+      banner.classList.add('show');
+      setTimeout(() => banner.classList.remove('show'), 3200);
+    }
+
+    /* ═══════════════════════════════════════
+       WHATSAPP
+       Cambia el número por el tuyo (con código de país, sin + ni espacios)
+    ═══════════════════════════════════════ */
+    function openWhatsApp() {
+      const numero  = '573001234567'; /* 🔧 CAMBIA ESTE NÚMERO */
+      const mensaje = encodeURIComponent('¡Hola! Abrí tu cartita 💌 y quería responderte 🥹');
+      window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
+    }
+
   </script>
 </body>
 </html>
