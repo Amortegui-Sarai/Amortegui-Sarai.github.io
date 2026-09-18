@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Una cartita para ti </title>
+  <title>Una cartita para ti 💌</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
   <style>
 
@@ -20,7 +20,7 @@
       align-items: center;
       justify-content: center;
       overflow-x: hidden;
-      padding: 30px 16px 60px;
+      padding: 20px 16px 40px;
     }
 
     /* ═══════════════════════════════════════
@@ -58,6 +58,7 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      margin-top: 40px; /* Margen para dar espacio arriba */
     }
 
     .title {
@@ -73,7 +74,7 @@
       font-size: clamp(0.82rem, 3vw, 0.95rem);
       color: #c2607e;
       font-style: italic;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     /* ═══════════════════════════════════════
@@ -83,7 +84,7 @@
       position: relative;
       width: min(300px, 86vw);
       height: min(195px, 56vw);
-      margin: 6px 0 4px;
+      margin: 10px 0 10px;
     }
 
     .envelope {
@@ -145,10 +146,11 @@
       bottom: 5%;
       left: 50%;
       transform: translateX(-50%) translateY(0);
-      width: 90%;
+      width: 92%;
+      max-height: 230px;
       background: linear-gradient(160deg, #fff8fb, #fff0f5);
       border-radius: 12px;
-      padding: 22px 18px 18px;
+      padding: 16px 16px 14px;
       z-index: 2;
       opacity: 0;
       pointer-events: none;
@@ -157,30 +159,31 @@
                   z-index 0s step-end .65s;
       box-shadow: 0 6px 28px rgba(181,0,91,.15);
       border: 1.5px solid #ffc2d4;
+      overflow-y: auto; /* Permite desplazarse si el texto es muy largo */
     }
-    .letter-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .letter-icon { font-size: 1.5rem; margin-bottom: 4px; }
 
     .letter h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+      font-size: clamp(1.2rem, 4.5vw, 1.4rem);
       color: #b5005b;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
     .letter p {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      font-size: clamp(0.95rem, 3.5vw, 1.05rem);
       color: #6b1a35;
-      line-height: 1.6;
-      margin-bottom: 8px;
+      line-height: 1.5;
+      margin-bottom: 6px;
     }
     .firma {
-      margin-top: 12px;
+      margin-top: 8px;
       color: #b5005b;
       font-style: italic;
       font-size: clamp(0.9rem, 3.2vw, 1rem) !important;
     }
 
-    /* ── Estado abierto ── */
+    /* ── Estado abierto (Ajustado translateY para que no suba tanto) ── */
     .envelope.open .flap {
       transform: rotateX(180deg);
       background: linear-gradient(160deg, #c0004a, #e8547a);
@@ -189,7 +192,7 @@
     .envelope.open .seal { opacity: 0; }
     .envelope.open .letter {
       opacity: 1;
-      transform: translateX(-50%) translateY(-110%);
+      transform: translateX(-50%) translateY(-65%); /* Posición centrada y visible */
       pointer-events: auto;
       z-index: 10;
       transition: opacity .55s ease .2s,
@@ -402,8 +405,7 @@
   <div class="modal-overlay" id="feelModal">
     <div class="modal-box">
       <div class="modal-icon">🥺💗</div>
-      <h3>Oye, escúchame...</h3>
-      <!-- EDITAR MENSAJE DEL MODAL -->
+      <h3>Corazón lindo/h3>
       <p>Yo sé que hay dias donde no tienes animos de nada flaquito pero quiero que sepas que estaré para ti</p>
       <p>Tu puedes con todo lo que te venga encima, siempre has podido.</p>
       <p>Spiderman es demasiado fuertee</p>
@@ -430,16 +432,13 @@
         <!-- Carta -->
         <div class="letter">
           <div class="letter-icon">💖</div>
-          <!-- EDITAR TÍTULO DE LA CARTA -->
           <h2>Para tii que eres especial,</h2>
-          <!-- EDITAR TEXTO DE LA CARTA -->
           <p>
             Solo quería pasarme por aquí para sacarte una sonrisa y recordarte lo importante que eres para mí. 
           </p>
           <p>
             Gracias por estar conmigo, agradezco tu existencia en mi vida
           </p>
-          <!-- EDITAR FIRMA -->
           <p class="firma">De: <strong>La merry jeinnn</strong></p>
         </div>
 
@@ -566,7 +565,6 @@
 
     /* WHATSAPP */
     function openWhatsApp() {
-      /* EDITAR NÚMERO (con código de país, sin espacios ni signo +) */
       const numero  = '573122683028'; 
       const mensaje = encodeURIComponent('Holaaaaaa');
       window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
