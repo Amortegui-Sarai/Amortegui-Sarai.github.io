@@ -58,7 +58,7 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      margin-top: 40px; /* Margen para dar espacio arriba */
+      margin-top: 40px;
     }
 
     .title {
@@ -159,7 +159,7 @@
                   z-index 0s step-end .65s;
       box-shadow: 0 6px 28px rgba(181,0,91,.15);
       border: 1.5px solid #ffc2d4;
-      overflow-y: auto; /* Permite desplazarse si el texto es muy largo */
+      overflow-y: auto;
     }
     .letter-icon { font-size: 1.5rem; margin-bottom: 4px; }
 
@@ -183,7 +183,7 @@
       font-size: clamp(0.9rem, 3.2vw, 1rem) !important;
     }
 
-    /* ── Estado abierto (Ajustado translateY para que no suba tanto) ── */
+    /* ── Estado abierto ── */
     .envelope.open .flap {
       transform: rotateX(180deg);
       background: linear-gradient(160deg, #c0004a, #e8547a);
@@ -192,7 +192,7 @@
     .envelope.open .seal { opacity: 0; }
     .envelope.open .letter {
       opacity: 1;
-      transform: translateX(-50%) translateY(-65%); /* Posición centrada y visible */
+      transform: translateX(-50%) translateY(-65%);
       pointer-events: auto;
       z-index: 10;
       transition: opacity .55s ease .2s,
@@ -236,12 +236,6 @@
 
     .btn-feel {
       background: linear-gradient(135deg, #ffd6e7, #ffb3cc);
-      color: #8b0040;
-      box-shadow: 0 4px 16px rgba(181,0,91,.18);
-    }
-
-    .btn-hug {
-      background: linear-gradient(135deg, #ffe0ec, #f9a8c0);
       color: #8b0040;
       box-shadow: 0 4px 16px rgba(181,0,91,.18);
     }
@@ -324,56 +318,6 @@
     .btn-close-modal:active { transform: translateY(1px);  }
 
     /* ═══════════════════════════════════════
-       ABRAZO VIRTUAL
-    ═══════════════════════════════════════ */
-    .hug-overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 400;
-      overflow: hidden;
-    }
-    .hug-heart {
-      position: absolute;
-      top: -60px;
-      font-size: 1.8rem;
-      opacity: 0;
-      animation: fallDown linear forwards;
-    }
-    @keyframes fallDown {
-      0%   { opacity: 0;   transform: translateY(0)    rotate(0deg)  scale(.7); }
-      15%  { opacity: 1; }
-      85%  { opacity: 1; }
-      100% { opacity: 0;   transform: translateY(105vh) rotate(20deg) scale(1.1); }
-    }
-
-    .hug-banner {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(.8);
-      background: linear-gradient(160deg, #fff0f5, #ffd6e7);
-      border: 2px solid #ffc2d4;
-      border-radius: 20px;
-      padding: 24px 28px;
-      text-align: center;
-      z-index: 450;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .4s ease, transform .4s cubic-bezier(.4,0,.2,1);
-      box-shadow: 0 10px 40px rgba(181,0,91,.2);
-    }
-    .hug-banner.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-    .hug-banner p {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.25rem;
-      color: #b5005b;
-    }
-
-    /* ═══════════════════════════════════════
        EXPLOSIÓN AL ABRIR
     ═══════════════════════════════════════ */
     .burst-heart {
@@ -395,17 +339,11 @@
   <!-- Partículas de fondo -->
   <div class="bg-particles" id="bgParticles"></div>
 
-  <!-- Overlay abrazo -->
-  <div class="hug-overlay" id="hugOverlay"></div>
-  <div class="hug-banner" id="hugBanner">
-    <p>Te mando un abrazooo,<br/>pero no hay nada más lindo que un abrazo realll</p>
-  </div>
-
   <!-- Modal "Léeme si te sientes mal" -->
   <div class="modal-overlay" id="feelModal">
     <div class="modal-box">
-      <div class="modal-icon">🥺💗</div>
-      <h3>Corazón lindo/h3>
+      <div class="modal-icon">💗</div>
+      <h3>Corazón lindo</h3>
       <p>Yo sé que hay dias donde no tienes animos de nada flaquito pero quiero que sepas que estaré para ti</p>
       <p>Tu puedes con todo lo que te venga encima, siempre has podido.</p>
       <p>Spiderman es demasiado fuertee</p>
@@ -434,12 +372,12 @@
           <div class="letter-icon">💖</div>
           <h2>Para tii que eres especial,</h2>
           <p>
-            Solo quería pasarme por aquí para sacarte una sonrisa y recordarte lo importante que eres para mí. 
+            Hice esto con la intención de sacarte una sonrisa y recordarte lo importante que eres para mí. 
           </p>
           <p>
-            Gracias por estar conmigo, agradezco tu existencia en mi vida
+             Gracias por estar conmigo, agradezco tu existencia en mi vida
           </p>
-          <p class="firma">De: <strong>La merry jeinnn</strong></p>
+          <p class="firma">Pd: <strong>Espero esto sirva jajaj</strong></p>
         </div>
 
       </div>
@@ -453,10 +391,6 @@
 
       <button class="btn btn-feel" onclick="openModal('feelModal')">
         Léeme si te sientes mall
-      </button>
-
-      <button class="btn btn-hug" onclick="triggerHug()">
-        Abrazooo virtual 
       </button>
 
       <button class="btn btn-wa" onclick="openWhatsApp()">
@@ -539,29 +473,6 @@
     document.getElementById('feelModal').addEventListener('click', function (e) {
       if (e.target === this) closeModal('feelModal');
     });
-
-    /* ABRAZO VIRTUAL */
-    function triggerHug() {
-      const overlay = document.getElementById('hugOverlay');
-      const banner  = document.getElementById('hugBanner');
-      const symbols = ['🫂','💕','💗','💓','🌸','💖','🩷','✨'];
-
-      for (let i = 0; i < 30; i++) {
-        const el = document.createElement('span');
-        el.classList.add('hug-heart');
-        el.textContent             = symbols[Math.floor(Math.random() * symbols.length)];
-        el.style.left              = Math.random() * 100 + 'vw';
-        el.style.fontSize          = (1.2 + Math.random() * 1.4) + 'rem';
-        const dur                  = 2.2 + Math.random() * 2;
-        el.style.animationDuration = dur + 's';
-        el.style.animationDelay    = Math.random() * 1.2 + 's';
-        overlay.appendChild(el);
-        el.addEventListener('animationend', () => el.remove());
-      }
-
-      banner.classList.add('show');
-      setTimeout(() => banner.classList.remove('show'), 3200);
-    }
 
     /* WHATSAPP */
     function openWhatsApp() {
