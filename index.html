@@ -46,6 +46,54 @@
     }
 
     /* ═══════════════════════════════════════
+       REPRODUCTOR DE MÚSICA FLOTANTE
+    ═══════════════════════════════════════ */
+    .music-pill {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid #ffb3cc;
+      border-radius: 40px;
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 18px rgba(181, 0, 91, 0.18);
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: #b5005b;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+    .music-pill:hover {
+      transform: scale(1.04) translateY(-1px);
+      box-shadow: 0 6px 22px rgba(181, 0, 91, 0.28);
+      background: rgba(255, 255, 255, 0.96);
+    }
+    .music-disc {
+      display: inline-block;
+      font-size: 1.15rem;
+      transition: transform 0.2s ease;
+    }
+    .music-disc.playing {
+      animation: spinDisc 3s linear infinite;
+    }
+    @keyframes spinDisc {
+      100% { transform: rotate(360deg); }
+    }
+    .music-state-icon {
+      font-size: 0.85rem;
+      margin-left: 2px;
+      color: #e8547a;
+    }
+
+    /* ═══════════════════════════════════════
        CONTENEDOR PRINCIPAL
     ═══════════════════════════════════════ */
     .container {
@@ -58,12 +106,12 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      margin-top: 40px;
+      margin-top: 45px;
     }
 
     .title {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(2rem, 7vw, 2.8rem);
+      font-size: clamp(2.1rem, 7.5vw, 2.9rem);
       color: #b5005b;
       text-shadow: 0 2px 8px rgba(181,0,91,.2);
       letter-spacing: 1px;
@@ -240,6 +288,26 @@
       box-shadow: 0 4px 16px rgba(181,0,91,.18);
     }
 
+    .btn-game {
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      color: #ffffff;
+      box-shadow: 0 5px 20px rgba(255, 117, 140, 0.4);
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-game::after {
+      content: '✨';
+      position: absolute;
+      right: 20px;
+      opacity: 0.8;
+      animation: bounceStar 1.4s infinite alternate ease-in-out;
+    }
+    @keyframes bounceStar {
+      from { transform: translateY(-2px) scale(0.9); }
+      to { transform: translateY(2px) scale(1.15); }
+    }
+
     .btn-wa {
       background: linear-gradient(135deg, #25d366, #128c7e);
       color: #fff;
@@ -247,19 +315,19 @@
     }
 
     /* ═══════════════════════════════════════
-       MODAL BASE
+       MODALES BASE
     ═══════════════════════════════════════ */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(181,0,91,.18);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(181,0,91,.25);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 500;
-      padding: 20px;
+      padding: 16px;
       opacity: 0;
       pointer-events: none;
       transition: opacity .3s ease;
@@ -271,33 +339,51 @@
 
     .modal-box {
       background: linear-gradient(160deg, #fff8fb, #fff0f5);
-      border-radius: 20px;
-      padding: 32px 26px;
-      max-width: 360px;
+      border-radius: 22px;
+      padding: 30px 24px;
+      max-width: 380px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 12px 48px rgba(181,0,91,.22);
+      box-shadow: 0 14px 50px rgba(181,0,91,.24);
       border: 1.5px solid #ffc2d4;
       transform: scale(.9) translateY(10px);
       transition: transform .3s cubic-bezier(.4,0,.2,1);
+      position: relative;
     }
     .modal-overlay.visible .modal-box {
       transform: scale(1) translateY(0);
+    }
+
+    .modal-close-x {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 1.25rem;
+      background: none;
+      border: none;
+      color: #c2607e;
+      cursor: pointer;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .modal-close-x:hover {
+      transform: scale(1.2);
+      color: #b5005b;
     }
 
     .modal-icon { font-size: 2.8rem; margin-bottom: 12px; }
 
     .modal-box h3 {
       font-family: 'Dancing Script', cursive;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: #b5005b;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .modal-box p {
       font-family: 'Dancing Script', cursive;
-      font-size: 1rem;
+      font-size: 1.05rem;
       color: #6b1a35;
-      line-height: 1.7;
+      line-height: 1.6;
       margin-bottom: 10px;
     }
 
@@ -318,7 +404,163 @@
     .btn-close-modal:active { transform: translateY(1px);  }
 
     /* ═══════════════════════════════════════
-       EXPLOSIÓN AL ABRIR
+       MINIJUEGO INTERACTIVO: CAZA-AMOR
+    ═══════════════════════════════════════ */
+    .game-modal-box {
+      max-width: 440px;
+      padding: 24px 20px 22px;
+    }
+    .game-header {
+      margin-bottom: 14px;
+    }
+    .game-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: #b5005b;
+      margin-bottom: 4px;
+    }
+    .game-desc {
+      font-size: 0.85rem;
+      color: #9c3d5d;
+      font-style: italic;
+    }
+
+    /* Barra de progreso y score */
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #b5005b;
+    }
+    .game-progress-track {
+      width: 100%;
+      height: 14px;
+      background: #ffd6e7;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: inset 0 2px 5px rgba(181,0,91,0.15);
+      border: 1px solid #ffb3cc;
+    }
+    .game-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff758c, #e8547a, #b5005b);
+      border-radius: 20px;
+      transition: width 0.25s ease-out;
+    }
+
+    /* Área de juego */
+    .game-arena {
+      position: relative;
+      width: 100%;
+      height: 290px;
+      background: linear-gradient(180deg, #fff2f8 0%, #ffe4ee 100%);
+      border: 2px dashed #f48fb1;
+      border-radius: 18px;
+      overflow: hidden;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    /* Elementos flotantes que se atrapan */
+    .game-target {
+      position: absolute;
+      font-size: 2.2rem;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease;
+      filter: drop-shadow(0 4px 8px rgba(181,0,91,0.25));
+      animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+    .game-target:active {
+      transform: translate(-50%, -50%) scale(1.35);
+    }
+    @keyframes popIn {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    /* Número flotante al atrapar (+10, +15, etc.) */
+    .game-float-score {
+      position: absolute;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #b5005b;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      animation: scoreUp 0.8s ease-out forwards;
+      z-index: 20;
+      text-shadow: 0 1px 4px #fff;
+    }
+    @keyframes scoreUp {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -90px) scale(1.3); }
+    }
+
+    /* Pantalla de Victoria / Vale */
+    .game-win-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeIn .4s ease;
+    }
+    .ticket-card {
+      background: #ffffff;
+      border: 2px dashed #e8547a;
+      border-radius: 16px;
+      padding: 18px 16px;
+      width: 100%;
+      box-shadow: 0 8px 24px rgba(181,0,91,0.15);
+      position: relative;
+    }
+    .ticket-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #e8547a, #b5005b);
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .ticket-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #b5005b;
+      margin-bottom: 2px;
+    }
+    .ticket-for {
+      font-size: 0.88rem;
+      color: #8b0040;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .ticket-rewards {
+      list-style: none;
+      text-align: left;
+      font-size: 0.9rem;
+      color: #551025;
+      margin: 8px 0 14px;
+      padding: 0 6px;
+      line-height: 1.6;
+    }
+    .ticket-rewards li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ═══════════════════════════════════════
+       EXPLOSIÓN DE CORAZONES
     ═══════════════════════════════════════ */
     .burst-heart {
       position: fixed;
@@ -336,12 +578,23 @@
 </head>
 <body>
 
+  <!-- Elemento de Audio de fondo -->
+  <audio id="bgMusic" src="musica.mp3" loop preload="auto"></audio>
+
+  <!-- Control flotante de música -->
+  <div class="music-pill" id="musicPill" onclick="toggleMusic()" title="Toca para reproducir o pausar la música">
+    <span class="music-disc" id="musicDisc">💿</span>
+    <span id="musicTitle">A Thousand Years</span>
+    <span class="music-state-icon" id="musicStateIcon">▶</span>
+  </div>
+
   <!-- Partículas de fondo -->
   <div class="bg-particles" id="bgParticles"></div>
 
   <!-- Modal "Léeme si te sientes mal" -->
   <div class="modal-overlay" id="feelModal">
     <div class="modal-box">
+      <button class="modal-close-x" onclick="closeModal('feelModal')">✕</button>
       <div class="modal-icon">💗</div>
       <h3>Corazón lindo</h3>
       <p>Yo sé que hay dias donde no tienes animos de nada flaquito pero quiero que sepas que estaré para ti</p>
@@ -349,6 +602,58 @@
       <p>Spiderman es demasiado fuertee</p>
       <p style="color:#b5005b; font-weight:700;">Te quiero flaco</p>
       <button class="btn-close-modal" onclick="closeModal('feelModal')">Besitoooo</button>
+    </div>
+  </div>
+
+  <!-- Modal Minijuego: Caza-Amor -->
+  <div class="modal-overlay" id="gameModal">
+    <div class="modal-box game-modal-box">
+      <button class="modal-close-x" onclick="closeGameModal()">✕</button>
+      
+      <!-- Encabezado del juego -->
+      <div class="game-header">
+        <h3 class="game-title">Caza-Amor para el Flaquito 🕷️❤️</h3>
+        <p class="game-desc">¡Atrapa los corazones y regalitos! Llega a 100 puntos para desbloquear tu vale secreto.</p>
+      </div>
+
+      <!-- Pantalla activa del juego -->
+      <div id="gamePlayScreen">
+        <div class="game-stats">
+          <span>Puntaje: <span id="gameScore">0</span> / 100</span>
+          <span id="gameStreakEmoji">💕</span>
+        </div>
+        <div class="game-progress-track">
+          <div class="game-progress-fill" id="gameProgressFill"></div>
+        </div>
+
+        <div class="game-arena" id="gameArena">
+          <!-- Los elementos flotantes aparecen aquí dinámicamente -->
+        </div>
+      </div>
+
+      <!-- Pantalla de victoria (Vale oficial canjeable) -->
+      <div class="game-win-screen" id="gameWinScreen">
+        <div class="ticket-card">
+          <div class="ticket-badge">✨ Premio Desbloqueado ✨</div>
+          <h4 class="ticket-title">Vale Oficial de Mimos</h4>
+          <p class="ticket-for">Otorgado exclusivamente a: <strong>El Flaquito / Spiderman</strong> 🕷️❤️</p>
+          <ul class="ticket-rewards">
+            <li>🫂 <span>1 Abrazo rompe-costillas cuando lo necesites</span></li>
+            <li>💋 <span>1000 Besitos en la frente garantizados</span></li>
+            <li>🍰 <span>Tu comida o postre favorito</span></li>
+            <li>🌟 <span>Recordatorio eterno de que puedes con todo y te quiero mucho</span></li>
+          </ul>
+        </div>
+        
+        <button class="btn btn-wa" style="width:100%; margin-top:6px;" onclick="claimPrizeWhatsApp()">
+          📲 Canjear este vale por WhatsApp
+        </button>
+
+        <button class="btn-close-modal" style="margin-top:4px;" onclick="restartGame()">
+          🔄 Jugar de nuevo
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -389,12 +694,16 @@
         ✉️ Abrir carta
       </button>
 
+      <button class="btn btn-game" onclick="openGameModal()">
+        🎮 Jugar: Caza-Amor
+      </button>
+
       <button class="btn btn-feel" onclick="openModal('feelModal')">
         Toca aqui si te sientes mall
       </button>
 
       <button class="btn btn-wa" onclick="openWhatsApp()">
-        Escribeme acá si quieres hablar
+        Escribemeee
       </button>
     </div>
 
@@ -418,12 +727,51 @@
       }
     })();
 
+    /* ═══════════════════════════════════════
+       REPRODUCTOR DE MÚSICA
+    ═══════════════════════════════════════ */
+    const bgMusic        = document.getElementById('bgMusic');
+    const musicDisc      = document.getElementById('musicDisc');
+    const musicStateIcon = document.getElementById('musicStateIcon');
+    let isMusicPlaying   = false;
+
+    function playMusic() {
+      bgMusic.play().then(() => {
+        isMusicPlaying = true;
+        musicDisc.classList.add('playing');
+        musicStateIcon.textContent = '⏸';
+      }).catch(err => {
+        console.log('Esperando interacción para iniciar música...');
+      });
+    }
+
+    function pauseMusic() {
+      bgMusic.pause();
+      isMusicPlaying = false;
+      musicDisc.classList.remove('playing');
+      musicStateIcon.textContent = '▶';
+    }
+
+    function toggleMusic() {
+      if (isMusicPlaying) {
+        pauseMusic();
+      } else {
+        playMusic();
+      }
+    }
+
     /* ABRIR / CERRAR SOBRE */
     let isOpen = false;
 
     function toggleEnvelope() {
       const envelope = document.getElementById('envelope');
       const btn      = document.getElementById('mainBtn');
+      
+      // Intentar iniciar música suavemente al interactuar con el sobre
+      if (!isMusicPlaying) {
+        playMusic();
+      }
+
       if (!isOpen) {
         envelope.classList.add('open');
         btn.textContent = '💌 Cerrar carta';
@@ -463,7 +811,7 @@
       }
     }
 
-    /* MODAL LÉEME */
+    /* MODAL BASE */
     function openModal(id) {
       document.getElementById(id).classList.add('visible');
     }
@@ -474,10 +822,231 @@
       if (e.target === this) closeModal('feelModal');
     });
 
+    /* ═══════════════════════════════════════
+       EFECTOS DE SONIDO (WEB AUDIO API SINTETIZADO)
+    ═══════════════════════════════════════ */
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playCatchSound(isSpecial) {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        const now = ctx.currentTime;
+        const freq = isSpecial ? 880 : 587.33; // A5 o D5
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + 0.12);
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.22);
+      } catch (e) {}
+    }
+
+    function playWinSound() {
+      try {
+        const ctx = getAudioContext();
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const startTime = ctx.currentTime + (i * 0.12);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, startTime);
+          gain.gain.setValueAtTime(0.25, startTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(startTime);
+          osc.stop(startTime + 0.4);
+        });
+      } catch (e) {}
+    }
+
+    /* ═══════════════════════════════════════
+       LÓGICA DEL MINIJUEGO: CAZA-AMOR
+    ═══════════════════════════════════════ */
+    const gameArena        = document.getElementById('gameArena');
+    const gameScoreEl      = document.getElementById('gameScore');
+    const gameProgressFill = document.getElementById('gameProgressFill');
+    const gamePlayScreen   = document.getElementById('gamePlayScreen');
+    const gameWinScreen    = document.getElementById('gameWinScreen');
+    const gameStreakEmoji  = document.getElementById('gameStreakEmoji');
+
+    let gameScore    = 0;
+    let spawnTimer   = null;
+    let isGameActive = false;
+
+    const gameItems = [
+      { emoji: '❤️', points: 10, special: false },
+      { emoji: '💖', points: 10, special: false },
+      { emoji: '🕷️', points: 15, special: true, label: '¡Fuerza Spidey!' },
+      { emoji: '💌', points: 20, special: true, label: '¡Cartita de amor!' },
+      { emoji: '🍫', points: 15, special: false },
+      { emoji: '✨', points: 10, special: false },
+      { emoji: '🌸', points: 10, special: false }
+    ];
+
+    function openGameModal() {
+      // Iniciar música de fondo al jugar si no está sonando
+      if (!isMusicPlaying) {
+        playMusic();
+      }
+      openModal('gameModal');
+      startGame();
+    }
+
+    function closeGameModal() {
+      closeModal('gameModal');
+      stopGame();
+    }
+
+    document.getElementById('gameModal').addEventListener('click', function (e) {
+      if (e.target === this) closeGameModal();
+    });
+
+    function startGame() {
+      gameScore = 0;
+      updateGameUI();
+      gamePlayScreen.style.display = 'block';
+      gameWinScreen.style.display  = 'none';
+      gameArena.innerHTML          = '';
+      isGameActive                 = true;
+
+      // Spawn inicial
+      spawnTarget();
+      spawnTarget();
+
+      clearInterval(spawnTimer);
+      spawnTimer = setInterval(() => {
+        if (isGameActive && gameArena.children.length < 5) {
+          spawnTarget();
+        }
+      }, 750);
+    }
+
+    function stopGame() {
+      isGameActive = false;
+      clearInterval(spawnTimer);
+      if (gameArena) gameArena.innerHTML = '';
+    }
+
+    function spawnTarget() {
+      if (!isGameActive) return;
+      const arenaWidth  = gameArena.clientWidth;
+      const arenaHeight = gameArena.clientHeight;
+
+      const randomItem = gameItems[Math.floor(Math.random() * gameItems.length)];
+      const target = document.createElement('div');
+      target.classList.add('game-target');
+      target.textContent = randomItem.emoji;
+
+      // Posición aleatoria con margen seguro
+      const posX = 30 + Math.random() * (arenaWidth - 60);
+      const posY = 35 + Math.random() * (arenaHeight - 70);
+      target.style.left = posX + 'px';
+      target.style.top  = posY + 'px';
+
+      // Duración en pantalla antes de desaparecer
+      const lifeTimeout = setTimeout(() => {
+        if (target.parentNode) {
+          target.style.transition = 'opacity 0.25s, transform 0.25s';
+          target.style.opacity = '0';
+          target.style.transform = 'translate(-50%, -50%) scale(0.3)';
+          setTimeout(() => target.remove(), 250);
+        }
+      }, 2000 + Math.random() * 800);
+
+      // Evento de captura
+      const catchHandler = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        clearTimeout(lifeTimeout);
+
+        // Sonido y puntos
+        playCatchSound(randomItem.special);
+        gameScore += randomItem.points;
+        if (gameScore > 100) gameScore = 100;
+
+        // Mostrar flotante de puntuación
+        showFloatingScore(posX, posY, `+${randomItem.points} ${randomItem.label ? randomItem.label : ''}`);
+
+        // Pequeño estallido en el arena
+        target.remove();
+        updateGameUI();
+
+        // Chequear condición de victoria
+        if (gameScore >= 100) {
+          triggerGameWin();
+        }
+      };
+
+      target.addEventListener('pointerdown', catchHandler);
+      gameArena.appendChild(target);
+    }
+
+    function showFloatingScore(x, y, text) {
+      const floatEl = document.createElement('span');
+      floatEl.classList.add('game-float-score');
+      floatEl.textContent = text;
+      floatEl.style.left = x + 'px';
+      floatEl.style.top  = y + 'px';
+      gameArena.appendChild(floatEl);
+      setTimeout(() => floatEl.remove(), 800);
+    }
+
+    function updateGameUI() {
+      gameScoreEl.textContent = gameScore;
+      gameProgressFill.style.width = gameScore + '%';
+
+      if (gameScore < 35) {
+        gameStreakEmoji.textContent = '💕';
+      } else if (gameScore < 70) {
+        gameStreakEmoji.textContent = '💖🕷️';
+      } else {
+        gameStreakEmoji.textContent = '🔥👑';
+      }
+    }
+
+    function triggerGameWin() {
+      stopGame();
+      playWinSound();
+      burstHearts();
+
+      setTimeout(() => {
+        gamePlayScreen.style.display = 'none';
+        gameWinScreen.style.display  = 'flex';
+      }, 400);
+    }
+
+    function restartGame() {
+      startGame();
+    }
+
     /* WHATSAPP */
     function openWhatsApp() {
       const numero  = '573122683028'; 
-      const mensaje = encodeURIComponent('Holaaaaaa flaquita hermosa JAJAJAJJA');
+      const mensaje = encodeURIComponent('Holaaaaaa');
+      window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
+    }
+
+    function claimPrizeWhatsApp() {
+      const numero  = '573122683028'; 
+      const mensaje = encodeURIComponent('¡Holaaa! Acabo de ganar en el juego Caza-Amor 🎮❤️ Vengo a reclamar mi vale oficial de mimos y abrazos 🥰🕷️');
       window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
     }
 
