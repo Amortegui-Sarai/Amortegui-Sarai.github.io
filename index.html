@@ -711,17 +711,17 @@
       
       <div class="game-header">
         <h3 class="game-title">Caza-Puntos 🕷️⏱️</h3>
-        <p class="game-desc">Si llegas a 100 desbloqueas tu premio vida mia. ¡Tienes 15 segundos y pasan rápido!</p>
+        <p class="game-desc">Si llegas a 150 desbloqueas tu premio vida mia. ¡Tienes 12 segundos y pasan rápido!</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game1PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game1TimerPill">
-            <span>⏱️</span> <span id="game1Timer">15s</span>
+            <span>⏱️</span> <span id="game1Timer">12s</span>
           </div>
           <div class="game-score-badge">
-            Puntos: <span id="game1Score">0</span>/100
+            Puntos: <span id="game1Score">0</span>/150
           </div>
         </div>
 
@@ -776,14 +776,14 @@
       
       <div class="game-header">
         <h3 class="game-title">Memorama Flash 🧠⚡</h3>
-        <p class="game-desc">Encuentra las 6 parejas antes de que se acabe el tiempo. Tienes 35 segundos</p>
+        <p class="game-desc">Encuentra las 6 parejas antes de que se acabe el tiempo. Tienes 20 segundos</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game2PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game2TimerPill">
-            <span>⏱️</span> <span id="game2Timer">35s</span>
+            <span>⏱️</span> <span id="game2Timer">20s</span>
           </div>
           <div class="game-score-badge">
             Parejas: <span id="game2Matches">0</span>/6
@@ -1061,8 +1061,8 @@
         const now = ctx.currentTime;
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(180, now);
-        osc.frequency.linearRampToValueAtTime(80, now + 0.35);
-        gain.gain.setValueAtTime(0.18, now);
+        osc.frequency.exponentialRampToValueAtTime(80, now + 0.3);
+        gain.gain.setValueAtTime(0.25, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
         osc.connect(gain);
         gain.connect(ctx.destination);
@@ -1071,405 +1071,304 @@
       } catch (e) {}
     }
 
-    function playWinSound() {
-      try {
-        const ctx = getAudioContext();
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        notes.forEach((freq, i) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          const t = ctx.currentTime + (i * 0.12);
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, t);
-          gain.gain.setValueAtTime(0.25, t);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(t);
-          osc.stop(t + 0.4);
-        });
-      } catch (e) {}
+    /* WHATSAPP */
+    function openWhatsApp() {
+      const msg = encodeURIComponent("Holaaa, vengo a reclamar o a pedir perdón porque me ganaste en los juegos de la cartita 💌✨");
+      window.open("https://wa.me/?text=" + msg, "_blank");
     }
-
-    function playTickSound() {
-      try {
-        const ctx = getAudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const now = ctx.currentTime;
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(950, now);
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.06);
-      } catch (e) {}
+    function claimPrize1WhatsApp() {
+      const msg = encodeURIComponent("¡Hola! He superado el Juego 1 (Caza-Puntos) de la cartita 🕷️🎯 ¡Ven a darme mis abrazos y mi premio!");
+      window.open("https://wa.me/?text=" + msg, "_blank");
+    }
+    function claimPrize2WhatsApp() {
+      const msg = encodeURIComponent("¡Hola! He superado el Memorama Flash 🧠🏆 ¡Quiero reclamar mi premio de la cartita!");
+      window.open("https://wa.me/?text=" + msg, "_blank");
     }
 
     /* ═══════════════════════════════════════
-       JUEGO 1: CAZA-PUNTOS CONTRARRELOJ (20s)
+       LÓGICA DEL JUEGO 1: CAZA-PUNTOS CONTRARRELOJ
     ═══════════════════════════════════════ */
-    const game1Arena        = document.getElementById('game1Arena');
-    const game1ScoreEl      = document.getElementById('game1Score');
-    const game1TimerEl      = document.getElementById('game1Timer');
-    const game1TimerPill    = document.getElementById('game1TimerPill');
-    const game1ProgressFill = document.getElementById('game1ProgressFill');
-    const game1PlayScreen   = document.getElementById('game1PlayScreen');
-    const game1WinScreen    = document.getElementById('game1WinScreen');
-    const game1LoseScreen   = document.getElementById('game1LoseScreen');
-
-    let game1Score       = 0;
-    let game1TimeLeft    = 15;
-    let game1SpawnTimer  = null;
-    let game1ClockTimer  = null;
-    let isGame1Active    = false;
-
-    const game1Items = [
-      { emoji: '🍕', points: 20, special: true, label: '¡Comidita!' },
-      { emoji: '🕷️', points: 15, special: true, label: '¡Spidey!' },
-      { emoji: '🍫', points: 15, special: false, label: '¡Pa la gula!' },
-      { emoji: '✨', points: 10, special: false, label: '¡Puntos!' },
-      { emoji: '🎮', points: 15, special: false, label: '¡Pro!' },
-      { emoji: '❤️', points: 10, special: false, label: '+10' },
-      { emoji: '😎', points: 15, special: false, label: '¡Esooo!' }
-    ];
+    let game1Interval = null;
+    let game1SpawnInterval = null;
+    let game1TimerVal = 12;
+    let game1ScoreVal = 0;
+    const game1TargetScore = 150;
 
     function openGame1Modal() {
-      if (!isMusicPlaying) playMusic();
       openModal('game1Modal');
       startGame1();
     }
-
     function closeGame1Modal() {
       closeModal('game1Modal');
       stopGame1();
     }
-
-    document.getElementById('game1Modal').addEventListener('click', function(e) {
-      if (e.target === this) closeGame1Modal();
-    });
+    function stopGame1() {
+      clearInterval(game1Interval);
+      clearInterval(game1SpawnInterval);
+      game1Interval = null;
+      game1SpawnInterval = null;
+    }
 
     function startGame1() {
       stopGame1();
-      game1Score    = 0;
-      game1TimeLeft = 15;
-      isGame1Active = true;
+      game1TimerVal = 12;
+      game1ScoreVal = 0;
 
-      game1PlayScreen.style.display = 'block';
-      game1WinScreen.style.display  = 'none';
-      game1LoseScreen.style.display = 'none';
-      game1TimerPill.classList.remove('urgent');
-      game1Arena.innerHTML = '';
+      document.getElementById('game1PlayScreen').style.display = 'block';
+      document.getElementById('game1LoseScreen').style.display = 'none';
+      document.getElementById('game1WinScreen').style.display = 'none';
+      document.getElementById('game1Score').textContent = '0';
+      document.getElementById('game1Timer').textContent = game1TimerVal + 's';
+      document.getElementById('game1ProgressFill').style.width = '0%';
+      document.getElementById('game1TimerPill').classList.remove('urgent');
 
-      updateGame1UI();
-      spawnGame1Target();
-      spawnGame1Target();
+      document.getElementById('game1Arena').innerHTML = '';
 
-      game1ClockTimer = setInterval(() => {
-        if (!isGame1Active) return;
-        game1TimeLeft--;
-        game1TimerEl.textContent = game1TimeLeft + 's';
-
-        if (game1TimeLeft <= 5) {
-          game1TimerPill.classList.add('urgent');
-          playTickSound();
+      game1Interval = setInterval(() => {
+        game1TimerVal--;
+        document.getElementById('game1Timer').textContent = game1TimerVal + 's';
+        const pill = document.getElementById('game1TimerPill');
+        if (game1TimerVal <= 4) {
+          pill.classList.add('urgent');
+        } else {
+          pill.classList.remove('urgent');
         }
 
-        if (game1TimeLeft <= 0) {
-          triggerGame1Lose();
+        if (game1TimerVal <= 0) {
+          stopGame1();
+          if (game1ScoreVal < game1TargetScore) {
+            playFailSound();
+            document.getElementById('game1PlayScreen').style.display = 'none';
+            document.getElementById('game1LoseScreen').style.display = 'flex';
+          }
         }
       }, 1000);
 
-      game1SpawnTimer = setInterval(() => {
-        if (isGame1Active && game1Arena.children.length < 5) {
-          spawnGame1Target();
-        }
-      }, 380);
-    }
-
-    function stopGame1() {
-      isGame1Active = false;
-      clearInterval(game1SpawnTimer);
-      clearInterval(game1ClockTimer);
-      if (game1Arena) game1Arena.innerHTML = '';
+      game1SpawnInterval = setInterval(() => {
+        spawnGame1Target();
+      }, 320);
     }
 
     function spawnGame1Target() {
-      if (!isGame1Active) return;
-      const arenaWidth  = game1Arena.clientWidth;
-      const arenaHeight = game1Arena.clientHeight;
+      const arena = document.getElementById('game1Arena');
+      if (!arena) return;
 
-      const randomItem = game1Items[Math.floor(Math.random() * game1Items.length)];
-      const target = document.createElement('div');
-      target.classList.add('game-target');
-      target.textContent = randomItem.emoji;
+      const item = document.createElement('div');
+      item.classList.add('game-target');
 
-      // Posición inicial aleatoria
-      const startX = 35 + Math.random() * (arenaWidth - 70);
-      const startY = 35 + Math.random() * (arenaHeight - 70);
+      const rand = Math.random();
+      let type = 'normal';
+      let pts = 10;
+      let emoji = '🕷️';
 
-      // Trayectoria rápida en ángulo
-      const angle = Math.random() * 2 * Math.PI;
-      const travelDist = 150 + Math.random() * 150; // Se mueve 150px a 300px
-      const endX = Math.max(25, Math.min(arenaWidth - 25, startX + Math.cos(angle) * travelDist));
-      const endY = Math.max(30, Math.min(arenaHeight - 30, startY + Math.sin(angle) * travelDist));
+      if (rand < 0.15) {
+        type = 'penalty';
+        pts = -15;
+        emoji = '💣';
+      } else if (rand < 0.35) {
+        type = 'gold';
+        pts = 25;
+        emoji = '💚';
+      }
 
-      // Pasan rápido: dura entre 0.7s y 1.05s
-      const flyTime = 700 + Math.random() * 350;
+      item.textContent = emoji;
 
-      target.style.left = startX + 'px';
-      target.style.top  = startY + 'px';
-      target.style.transition = `left ${flyTime/1000}s cubic-bezier(0.25, 0.9, 0.4, 1), top ${flyTime/1000}s cubic-bezier(0.25, 0.9, 0.4, 1), transform 0.15s ease, opacity 0.2s ease`;
+      const arenaRect = arena.getBoundingClientRect();
+      const maxX = arenaRect.width - 50;
+      const maxY = arenaRect.height - 50;
+      const x = Math.max(30, Math.floor(Math.random() * maxX));
+      const y = Math.max(30, Math.floor(Math.random() * maxY));
 
-      game1Arena.appendChild(target);
+      item.style.left = x + 'px';
+      item.style.top = y + 'px';
 
-      // Iniciar animación rápida en el siguiente frame
-      requestAnimationFrame(() => {
-        target.style.left = endX + 'px';
-        target.style.top  = endY + 'px';
-      });
+      const lifespan = type === 'gold' ? 800 : (type === 'penalty' ? 1200 : 1000);
 
-      // Desaparece si no lo atrapan
-      const lifeTimeout = setTimeout(() => {
-        if (target.parentNode) {
-          target.style.opacity = '0';
-          target.style.transform = 'translate(-50%, -50%) scale(0.2)';
-          setTimeout(() => target.remove(), 200);
-        }
-      }, flyTime);
-
-      const catchHandler = (e) => {
+      const clickHandler = (e) => {
         e.stopPropagation();
-        e.preventDefault();
-        clearTimeout(lifeTimeout);
+        game1ScoreVal += pts;
+        if (game1ScoreVal < 0) game1ScoreVal = 0;
 
-        // Detectar posición exacta donde se tocó mientras se movía
-        const rect = target.getBoundingClientRect();
-        const arenaRect = game1Arena.getBoundingClientRect();
-        const curX = rect.left - arenaRect.left + rect.width / 2;
-        const curY = rect.top - arenaRect.top + rect.height / 2;
+        document.getElementById('game1Score').textContent = game1ScoreVal;
+        const pct = Math.min(100, (game1ScoreVal / game1TargetScore) * 100);
+        document.getElementById('game1ProgressFill').style.width = pct + '%';
 
-        playCatchSound(randomItem.special);
-        game1Score += randomItem.points;
-        if (game1Score > 100) game1Score = 100;
+        playCatchSound(type === 'gold');
+        showFloatScore(arena, x, y, (pts > 0 ? '+' + pts : pts));
 
-        showFloatingScore(game1Arena, curX, curY, `+${randomItem.points} ${randomItem.label || ''}`);
-        target.remove();
-        updateGame1UI();
+        item.remove();
 
-        if (game1Score >= 100) {
-          triggerGame1Win();
+        if (game1ScoreVal >= game1TargetScore) {
+          stopGame1();
+          playMatchSound();
+          document.getElementById('game1PlayScreen').style.display = 'none';
+          document.getElementById('game1WinScreen').style.display = 'flex';
+          burstHearts();
         }
       };
 
-      target.addEventListener('pointerdown', catchHandler);
-    }
+      item.addEventListener('pointerdown', clickHandler);
+      arena.appendChild(item);
 
-    function showFloatingScore(container, x, y, text) {
-      const floatEl = document.createElement('span');
-      floatEl.classList.add('game-float-score');
-      floatEl.textContent = text;
-      floatEl.style.left = x + 'px';
-      floatEl.style.top  = y + 'px';
-      container.appendChild(floatEl);
-      setTimeout(() => floatEl.remove(), 750);
-    }
-
-    function updateGame1UI() {
-      game1ScoreEl.textContent = game1Score;
-      game1ProgressFill.style.width = game1Score + '%';
-      game1TimerEl.textContent = game1TimeLeft + 's';
-    }
-
-    function triggerGame1Win() {
-      stopGame1();
-      playWinSound();
-      burstHearts();
       setTimeout(() => {
-        game1PlayScreen.style.display = 'none';
-        game1WinScreen.style.display  = 'flex';
-      }, 350);
+        if (item && item.parentElement) {
+          item.remove();
+        }
+      }, lifespan);
     }
 
-    function triggerGame1Lose() {
-      stopGame1();
-      playFailSound();
-      setTimeout(() => {
-        game1PlayScreen.style.display = 'none';
-        game1LoseScreen.style.display = 'flex';
-      }, 300);
-    }
-
-    function claimPrize1WhatsApp() {
-      const numero  = '573122683028'; 
-      const mensaje = encodeURIComponent('Gane el juegoo. Vengo a cobrar mi premio');
-      window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
+    function showFloatScore(arena, x, y, text) {
+      const el = document.createElement('div');
+      el.classList.add('game-float-score');
+      el.textContent = text;
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      arena.appendChild(el);
+      setTimeout(() => el.remove(), 750);
     }
 
     /* ═══════════════════════════════════════
-       JUEGO 2: MEMORAMA FLASH (25s)
+       LÓGICA DEL JUEGO 2: MEMORAMA FLASH
     ═══════════════════════════════════════ */
-    const memoryGrid      = document.getElementById('memoryGrid');
-    const game2TimerEl    = document.getElementById('game2Timer');
-    const game2TimerPill  = document.getElementById('game2TimerPill');
-    const game2MatchesEl  = document.getElementById('game2Matches');
-    const game2PlayScreen = document.getElementById('game2PlayScreen');
-    const game2WinScreen  = document.getElementById('game2WinScreen');
-    const game2LoseScreen = document.getElementById('game2LoseScreen');
-
-    let game2TimeLeft     = 35;
-    let game2ClockTimer   = null;
-    let isGame2Active     = false;
-    let flippedCards      = [];
-    let matchedPairsCount = 0;
-    let lockBoard         = false;
-
-    const memoryIcons = ['🍕', '🕷️', '🎮', '🍔', '⚡', '🕶️'];
+    let game2Interval = null;
+    let game2TimerVal = 20;
+    let game2MatchesVal = 0;
+    const game2TotalMatches = 6;
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
 
     function openGame2Modal() {
-      if (!isMusicPlaying) playMusic();
       openModal('game2Modal');
       startGame2();
     }
-
     function closeGame2Modal() {
       closeModal('game2Modal');
       stopGame2();
     }
-
-    document.getElementById('game2Modal').addEventListener('click', function(e) {
-      if (e.target === this) closeGame2Modal();
-    });
+    function stopGame2() {
+      clearInterval(game2Interval);
+      game2Interval = null;
+    }
 
     function startGame2() {
       stopGame2();
-      game2TimeLeft     = 35;
-      matchedPairsCount = 0;
-      flippedCards      = [];
-      lockBoard         = false;
-      isGame2Active     = true;
+      game2TimerVal = 20;
+      game2MatchesVal = 0;
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
 
-      game2PlayScreen.style.display = 'block';
-      game2WinScreen.style.display  = 'none';
-      game2LoseScreen.style.display = 'none';
-      game2TimerPill.classList.remove('urgent');
-      game2MatchesEl.textContent    = '0';
-      game2TimerEl.textContent      = '35s';
+      document.getElementById('game2PlayScreen').style.display = 'block';
+      document.getElementById('game2LoseScreen').style.display = 'none';
+      document.getElementById('game2WinScreen').style.display = 'none';
+      document.getElementById('game2Matches').textContent = '0';
+      document.getElementById('game2Timer').textContent = game2TimerVal + 's';
+      document.getElementById('game2TimerPill').classList.remove('urgent');
 
-      renderMemoryGrid();
+      buildMemoryGrid();
 
-      game2ClockTimer = setInterval(() => {
-        if (!isGame2Active) return;
-        game2TimeLeft--;
-        game2TimerEl.textContent = game2TimeLeft + 's';
-
-        if (game2TimeLeft <= 7) {
-          game2TimerPill.classList.add('urgent');
-          playTickSound();
+      game2Interval = setInterval(() => {
+        game2TimerVal--;
+        document.getElementById('game2Timer').textContent = game2TimerVal + 's';
+        const pill = document.getElementById('game2TimerPill');
+        if (game2TimerVal <= 5) {
+          pill.classList.add('urgent');
+        } else {
+          pill.classList.remove('urgent');
         }
 
-        if (game2TimeLeft <= 0) {
-          triggerGame2Lose();
+        if (game2TimerVal <= 0) {
+          stopGame2();
+          if (game2MatchesVal < game2TotalMatches) {
+            playFailSound();
+            document.getElementById('game2PlayScreen').style.display = 'none';
+            document.getElementById('game2LoseScreen').style.display = 'flex';
+          }
         }
       }, 1000);
     }
 
-    function stopGame2() {
-      isGame2Active = false;
-      clearInterval(game2ClockTimer);
-    }
+    function buildMemoryGrid() {
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
 
-    function renderMemoryGrid() {
-      memoryGrid.innerHTML = '';
-      const deck = [...memoryIcons, ...memoryIcons].sort(() => Math.random() - 0.5);
+      const emojis = ['🕷️', '💚', '✨', '💖', '👑', '🌷'];
+      let cardSymbols = [...emojis, ...emojis];
+      cardSymbols.sort(() => Math.random() - 0.5);
 
-      deck.forEach(icon => {
+      cardSymbols.forEach((emoji) => {
         const card = document.createElement('div');
         card.classList.add('memory-card');
-        card.dataset.icon = icon;
+        card.dataset.emoji = emoji;
 
         card.innerHTML = `
           <div class="memory-face memory-back">❓</div>
-          <div class="memory-face memory-front">${icon}</div>
+          <div class="memory-face memory-front">${emoji}</div>
         `;
 
-        card.addEventListener('pointerdown', () => handleCardClick(card));
-        memoryGrid.appendChild(card);
+        card.addEventListener('click', flipCard);
+        grid.appendChild(card);
       });
     }
 
-    function handleCardClick(card) {
-      if (!isGame2Active || lockBoard) return;
-      if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+    function flipCard() {
+      if (lockBoard) return;
+      if (this === firstCard) return;
+      if (this.classList.contains('matched') || this.classList.contains('flipped')) return;
 
-      card.classList.add('flipped');
-      playCatchSound(false);
-      flippedCards.push(card);
+      this.classList.add('flipped');
 
-      if (flippedCards.length === 2) {
-        checkMemoryMatch();
+      if (!firstCard) {
+        firstCard = this;
+        return;
       }
+
+      secondCard = this;
+      checkForMatch();
     }
 
-    function checkMemoryMatch() {
-      lockBoard = true;
-      const [card1, card2] = flippedCards;
-      const isMatch = card1.dataset.icon === card2.dataset.icon;
+    function checkForMatch() {
+      let isMatch = firstCard.dataset.emoji === secondCard.dataset.emoji;
 
       if (isMatch) {
-        playMatchSound();
-        card1.classList.add('matched');
-        card2.classList.add('matched');
-        matchedPairsCount++;
-        game2MatchesEl.textContent = matchedPairsCount;
-        flippedCards = [];
-        lockBoard = false;
-
-        if (matchedPairsCount === 6) {
-          triggerGame2Win();
-        }
+        disableCards();
       } else {
-        setTimeout(() => {
-          card1.classList.remove('flipped');
-          card2.classList.remove('flipped');
-          flippedCards = [];
-          lockBoard = false;
-        }, 550);
+        unflipCards();
       }
     }
 
-    function triggerGame2Win() {
-      stopGame2();
-      playWinSound();
-      burstHearts();
+    function disableCards() {
+      firstCard.classList.add('matched');
+      secondCard.classList.add('matched');
+      firstCard.removeEventListener('click', flipCard);
+      secondCard.removeEventListener('click', flipCard);
+
+      game2MatchesVal++;
+      document.getElementById('game2Matches').textContent = game2MatchesVal;
+      playMatchSound();
+
+      resetBoard();
+
+      if (game2MatchesVal === game2TotalMatches) {
+        stopGame2();
+        document.getElementById('game2PlayScreen').style.display = 'none';
+        document.getElementById('game2WinScreen').style.display = 'flex';
+        burstHearts();
+      }
+    }
+
+    function unflipCards() {
+      lockBoard = true;
       setTimeout(() => {
-        game2PlayScreen.style.display = 'none';
-        game2WinScreen.style.display  = 'flex';
-      }, 400);
+        firstCard.classList.remove('flipped');
+        secondCard.classList.remove('flipped');
+        resetBoard();
+      }, 650);
     }
 
-    function triggerGame2Lose() {
-      stopGame2();
-      playFailSound();
-      setTimeout(() => {
-        game2PlayScreen.style.display = 'none';
-        game2LoseScreen.style.display = 'flex';
-      }, 300);
-    }
-
-    function claimPrize2WhatsApp() {
-      const numero  = '573122683028'; 
-      const mensaje = encodeURIComponent('¡Le gané al memorama contrarreloj antes de que sonara la alarma! 😎🎮 Me debes (aqui lo que quieres ......)');
-      window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
-    }
-
-    /* WHATSAPP GENERAL */
-    function openWhatsApp() {
-      const numero  = '573122683028'; 
-      const mensaje = encodeURIComponent('Holaaa, vengo a pedir perdón porque no aguanto el orgullo con mi mujerrrr');
-      window.open('https://wa.me/' + numero + '?text=' + mensaje, '_blank');
+    function resetBoard() {
+      [firstCard, secondCard, lockBoard] = [null, null, false];
     }
 
   </script>
