@@ -494,19 +494,17 @@
     }
     .game-target {
       position: absolute;
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       cursor: pointer;
       transform: translate(-50%, -50%);
-      transition: transform 0.15s ease;
       filter: drop-shadow(0 4px 8px rgba(181,0,91,0.25));
-      animation: popIn 0.28s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      will-change: left, top, transform, opacity;
+      z-index: 10;
     }
     .game-target:active {
-      transform: translate(-50%, -50%) scale(1.35);
-    }
-    @keyframes popIn {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      transform: translate(-50%, -50%) scale(1.4);
     }
     .game-float-score {
       position: absolute;
@@ -713,14 +711,14 @@
       
       <div class="game-header">
         <h3 class="game-title">Caza-Puntos 🕷️⏱️</h3>
-        <p class="game-desc">Si llegas a 100 desbloqueas tu premio vida mia. ¡Tienes 20 segundos!</p>
+        <p class="game-desc">Si llegas a 100 desbloqueas tu premio vida mia. ¡Tienes 15 segundos y pasan rápido!</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game1PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game1TimerPill">
-            <span>⏱️</span> <span id="game1Timer">20s</span>
+            <span>⏱️</span> <span id="game1Timer">15s</span>
           </div>
           <div class="game-score-badge">
             Puntos: <span id="game1Score">0</span>/100
@@ -778,14 +776,14 @@
       
       <div class="game-header">
         <h3 class="game-title">Memorama Flash 🧠⚡</h3>
-        <p class="game-desc">Encuentra las 6 parejas antes de que se acabe el tiempo. Tienes 25 segundos</p>
+        <p class="game-desc">Encuentra las 6 parejas antes de que se acabe el tiempo. Tienes 35 segundos</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game2PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game2TimerPill">
-            <span>⏱️</span> <span id="game2Timer">25s</span>
+            <span>⏱️</span> <span id="game2Timer">35s</span>
           </div>
           <div class="game-score-badge">
             Parejas: <span id="game2Matches">0</span>/6
@@ -1123,7 +1121,7 @@
     const game1LoseScreen   = document.getElementById('game1LoseScreen');
 
     let game1Score       = 0;
-    let game1TimeLeft    = 20;
+    let game1TimeLeft    = 15;
     let game1SpawnTimer  = null;
     let game1ClockTimer  = null;
     let isGame1Active    = false;
@@ -1156,7 +1154,7 @@
     function startGame1() {
       stopGame1();
       game1Score    = 0;
-      game1TimeLeft = 20;
+      game1TimeLeft = 15;
       isGame1Active = true;
 
       game1PlayScreen.style.display = 'block';
@@ -1188,7 +1186,7 @@
         if (isGame1Active && game1Arena.children.length < 5) {
           spawnGame1Target();
         }
-      }, 650);
+      }, 380);
     }
 
     function stopGame1() {
@@ -1208,30 +1206,56 @@
       target.classList.add('game-target');
       target.textContent = randomItem.emoji;
 
-      const posX = 30 + Math.random() * (arenaWidth - 60);
-      const posY = 35 + Math.random() * (arenaHeight - 70);
-      target.style.left = posX + 'px';
-      target.style.top  = posY + 'px';
+      // Posición inicial aleatoria
+      const startX = 35 + Math.random() * (arenaWidth - 70);
+      const startY = 35 + Math.random() * (arenaHeight - 70);
 
+      // Trayectoria rápida en ángulo
+      const angle = Math.random() * 2 * Math.PI;
+      const travelDist = 150 + Math.random() * 150; // Se mueve 150px a 300px
+      const endX = Math.max(25, Math.min(arenaWidth - 25, startX + Math.cos(angle) * travelDist));
+      const endY = Math.max(30, Math.min(arenaHeight - 30, startY + Math.sin(angle) * travelDist));
+
+      // Pasan rápido: dura entre 0.7s y 1.05s
+      const flyTime = 700 + Math.random() * 350;
+
+      target.style.left = startX + 'px';
+      target.style.top  = startY + 'px';
+      target.style.transition = `left ${flyTime/1000}s cubic-bezier(0.25, 0.9, 0.4, 1), top ${flyTime/1000}s cubic-bezier(0.25, 0.9, 0.4, 1), transform 0.15s ease, opacity 0.2s ease`;
+
+      game1Arena.appendChild(target);
+
+      // Iniciar animación rápida en el siguiente frame
+      requestAnimationFrame(() => {
+        target.style.left = endX + 'px';
+        target.style.top  = endY + 'px';
+      });
+
+      // Desaparece si no lo atrapan
       const lifeTimeout = setTimeout(() => {
         if (target.parentNode) {
-          target.style.transition = 'opacity 0.25s, transform 0.25s';
           target.style.opacity = '0';
-          target.style.transform = 'translate(-50%, -50%) scale(0.3)';
-          setTimeout(() => target.remove(), 250);
+          target.style.transform = 'translate(-50%, -50%) scale(0.2)';
+          setTimeout(() => target.remove(), 200);
         }
-      }, 1800 + Math.random() * 600);
+      }, flyTime);
 
       const catchHandler = (e) => {
         e.stopPropagation();
         e.preventDefault();
         clearTimeout(lifeTimeout);
 
+        // Detectar posición exacta donde se tocó mientras se movía
+        const rect = target.getBoundingClientRect();
+        const arenaRect = game1Arena.getBoundingClientRect();
+        const curX = rect.left - arenaRect.left + rect.width / 2;
+        const curY = rect.top - arenaRect.top + rect.height / 2;
+
         playCatchSound(randomItem.special);
         game1Score += randomItem.points;
         if (game1Score > 100) game1Score = 100;
 
-        showFloatingScore(game1Arena, posX, posY, `+${randomItem.points} ${randomItem.label || ''}`);
+        showFloatingScore(game1Arena, curX, curY, `+${randomItem.points} ${randomItem.label || ''}`);
         target.remove();
         updateGame1UI();
 
@@ -1241,7 +1265,6 @@
       };
 
       target.addEventListener('pointerdown', catchHandler);
-      game1Arena.appendChild(target);
     }
 
     function showFloatingScore(container, x, y, text) {
@@ -1296,7 +1319,7 @@
     const game2WinScreen  = document.getElementById('game2WinScreen');
     const game2LoseScreen = document.getElementById('game2LoseScreen');
 
-    let game2TimeLeft     = 25;
+    let game2TimeLeft     = 35;
     let game2ClockTimer   = null;
     let isGame2Active     = false;
     let flippedCards      = [];
@@ -1322,7 +1345,7 @@
 
     function startGame2() {
       stopGame2();
-      game2TimeLeft     = 25;
+      game2TimeLeft     = 35;
       matchedPairsCount = 0;
       flippedCards      = [];
       lockBoard         = false;
@@ -1333,7 +1356,7 @@
       game2LoseScreen.style.display = 'none';
       game2TimerPill.classList.remove('urgent');
       game2MatchesEl.textContent    = '0';
-      game2TimerEl.textContent      = '25s';
+      game2TimerEl.textContent      = '35s';
 
       renderMemoryGrid();
 
@@ -1342,7 +1365,7 @@
         game2TimeLeft--;
         game2TimerEl.textContent = game2TimeLeft + 's';
 
-        if (game2TimeLeft <= 6) {
+        if (game2TimeLeft <= 7) {
           game2TimerPill.classList.add('urgent');
           playTickSound();
         }
