@@ -494,7 +494,7 @@
     }
     .game-target {
       position: absolute;
-      font-size: 2.3rem;
+      font-size: 1.6rem;
       cursor: pointer;
       transform: translate(-50%, -50%);
       filter: drop-shadow(0 4px 8px rgba(181,0,91,0.25));
@@ -502,6 +502,7 @@
       -webkit-tap-highlight-color: transparent;
       will-change: left, top, transform, opacity;
       z-index: 10;
+      transition: left 0.35s ease-out, top 0.35s ease-out;
     }
     .game-target:active {
       transform: translate(-50%, -50%) scale(1.4);
@@ -530,14 +531,14 @@
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 6px;
       width: 100%;
       margin: 8px 0 10px;
       perspective: 900px;
     }
     .memory-card {
-      height: 70px;
-      border-radius: 12px;
+      height: 52px;
+      border-radius: 10px;
       cursor: pointer;
       position: relative;
       transform-style: preserve-3d;
@@ -557,7 +558,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -568,12 +569,12 @@
     .memory-back {
       background: linear-gradient(135deg, #845ec2, #d65db1);
       color: white;
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       border: 2px solid #ffb3cc;
     }
     .memory-front {
       background: #ffffff;
-      font-size: 1.85rem;
+      font-size: 1.4rem;
       transform: rotateY(180deg);
       border: 2px solid #845ec2;
     }
@@ -710,18 +711,18 @@
       <button class="modal-close-x" onclick="closeGame1Modal()">✕</button>
       
       <div class="game-header">
-        <h3 class="game-title">Caza-Puntos 🕷️⏱️</h3>
-        <p class="game-desc">Si llegas a 150 desbloqueas tu premio vida mia. ¡Tienes 12 segundos y pasan rápido!</p>
+        <h3 class="game-title">Caza-Puntos 🕷️⏱️ (Modo Extremo)</h3>
+        <p class="game-desc">¡Llega a 180 puntos en solo 10 segundos! Cuidado que se mueven rápido y hay bombas (💣 = -25pts).</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game1PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game1TimerPill">
-            <span>⏱️</span> <span id="game1Timer">12s</span>
+            <span>⏱️</span> <span id="game1Timer">10s</span>
           </div>
           <div class="game-score-badge">
-            Puntos: <span id="game1Score">0</span>/150
+            Puntos: <span id="game1Score">0</span>/180
           </div>
         </div>
 
@@ -775,8 +776,8 @@
       <button class="modal-close-x" onclick="closeGame2Modal()">✕</button>
       
       <div class="game-header">
-        <h3 class="game-title">Memorama Flash 🧠⚡</h3>
-        <p class="game-desc">Encuentra las 6 parejas antes de que se acabe el tiempo. Tienes 20 segundos</p>
+        <h3 class="game-title">Memorama Hardcore 🧠⚡</h3>
+        <p class="game-desc">¡Encuentra las 8 parejas (16 cartas en total) en solo 20 segundos!</p>
       </div>
 
       <!-- Pantalla activa -->
@@ -786,12 +787,12 @@
             <span>⏱️</span> <span id="game2Timer">20s</span>
           </div>
           <div class="game-score-badge">
-            Parejas: <span id="game2Matches">0</span>/6
+            Parejas: <span id="game2Matches">0</span>/8
           </div>
         </div>
 
         <div class="memory-grid" id="memoryGrid">
-          <!-- 12 cartas dinámicas -->
+          <!-- 16 cartas dinámicas -->
         </div>
       </div>
 
@@ -810,7 +811,7 @@
       <!-- Victoria -->
       <div class="game-win-screen" id="game2WinScreen">
         <div class="ticket-card" style="border-color:#845ec2;">
-          <div class="ticket-badge" style="background:linear-gradient(135deg, #845ec2, #d65db1);">🏆 Nivel Pro Superado 🏆</div>
+          <div class="ticket-badge" style="background:linear-gradient(135deg, #845ec2, #d65db1);">🏆 Nivel God Superado 🏆</div>
           <h4 class="ticket-title" style="color:#845ec2;">Vale para redimir🎮</h4>
           <p class="ticket-for">Otorgado a: <strong>El amor mio con una super memoria  </strong> jajajaja </p>
           <ul class="ticket-rewards">
@@ -1086,13 +1087,14 @@
     }
 
     /* ═══════════════════════════════════════
-       LÓGICA DEL JUEGO 1: CAZA-PUNTOS CONTRARRELOJ
+       LÓGICA DEL JUEGO 1: CAZA-PUNTOS CONTRARRELOJ (MODO HARD)
     ═══════════════════════════════════════ */
     let game1Interval = null;
     let game1SpawnInterval = null;
-    let game1TimerVal = 12;
+    let game1MoveInterval = null;
+    let game1TimerVal = 10;
     let game1ScoreVal = 0;
-    const game1TargetScore = 150;
+    const game1TargetScore = 180;
 
     function openGame1Modal() {
       openModal('game1Modal');
@@ -1105,13 +1107,15 @@
     function stopGame1() {
       clearInterval(game1Interval);
       clearInterval(game1SpawnInterval);
+      clearInterval(game1MoveInterval);
       game1Interval = null;
       game1SpawnInterval = null;
+      game1MoveInterval = null;
     }
 
     function startGame1() {
       stopGame1();
-      game1TimerVal = 12;
+      game1TimerVal = 10;
       game1ScoreVal = 0;
 
       document.getElementById('game1PlayScreen').style.display = 'block';
@@ -1128,7 +1132,7 @@
         game1TimerVal--;
         document.getElementById('game1Timer').textContent = game1TimerVal + 's';
         const pill = document.getElementById('game1TimerPill');
-        if (game1TimerVal <= 4) {
+        if (game1TimerVal <= 3) {
           pill.classList.add('urgent');
         } else {
           pill.classList.remove('urgent');
@@ -1144,9 +1148,31 @@
         }
       }, 1000);
 
+      // Aparición muy rápida
       game1SpawnInterval = setInterval(() => {
         spawnGame1Target();
-      }, 320);
+      }, 220);
+
+      // Movimiento evasivo continuo
+      game1MoveInterval = setInterval(() => {
+        moveGame1Targets();
+      }, 250);
+    }
+
+    function moveGame1Targets() {
+      const arena = document.getElementById('game1Arena');
+      if (!arena) return;
+      const arenaRect = arena.getBoundingClientRect();
+      const maxX = arenaRect.width - 40;
+      const maxY = arenaRect.height - 40;
+
+      const targets = arena.querySelectorAll('.game-target');
+      targets.forEach(target => {
+        const x = Math.max(25, Math.floor(Math.random() * maxX));
+        const y = Math.max(25, Math.floor(Math.random() * maxY));
+        target.style.left = x + 'px';
+        target.style.top = y + 'px';
+      });
     }
 
     function spawnGame1Target() {
@@ -1161,28 +1187,29 @@
       let pts = 10;
       let emoji = '🕷️';
 
-      if (rand < 0.15) {
+      if (rand < 0.25) {
         type = 'penalty';
-        pts = -15;
+        pts = -25;
         emoji = '💣';
-      } else if (rand < 0.35) {
+      } else if (rand < 0.45) {
         type = 'gold';
-        pts = 25;
+        pts = 20;
         emoji = '💚';
       }
 
       item.textContent = emoji;
 
       const arenaRect = arena.getBoundingClientRect();
-      const maxX = arenaRect.width - 50;
-      const maxY = arenaRect.height - 50;
-      const x = Math.max(30, Math.floor(Math.random() * maxX));
-      const y = Math.max(30, Math.floor(Math.random() * maxY));
+      const maxX = arenaRect.width - 40;
+      const maxY = arenaRect.height - 40;
+      const x = Math.max(25, Math.floor(Math.random() * maxX));
+      const y = Math.max(25, Math.floor(Math.random() * maxY));
 
       item.style.left = x + 'px';
       item.style.top = y + 'px';
 
-      const lifespan = type === 'gold' ? 800 : (type === 'penalty' ? 1200 : 1000);
+      // Desaparecen muy rápido (450ms a 650ms)
+      const lifespan = type === 'gold' ? 450 : (type === 'penalty' ? 700 : 550);
 
       const clickHandler = (e) => {
         e.stopPropagation();
@@ -1193,8 +1220,12 @@
         const pct = Math.min(100, (game1ScoreVal / game1TargetScore) * 100);
         document.getElementById('game1ProgressFill').style.width = pct + '%';
 
-        playCatchSound(type === 'gold');
-        showFloatScore(arena, x, y, (pts > 0 ? '+' + pts : pts));
+        if (type === 'penalty') {
+          playFailSound();
+        } else {
+          playCatchSound(type === 'gold');
+        }
+        showFloatScore(arena, parseFloat(item.style.left), parseFloat(item.style.top), (pts > 0 ? '+' + pts : pts));
 
         item.remove();
 
@@ -1228,12 +1259,12 @@
     }
 
     /* ═══════════════════════════════════════
-       LÓGICA DEL JUEGO 2: MEMORAMA FLASH
+       LÓGICA DEL JUEGO 2: MEMORAMA FLASH (MODO HARD)
     ═══════════════════════════════════════ */
     let game2Interval = null;
     let game2TimerVal = 20;
     let game2MatchesVal = 0;
-    const game2TotalMatches = 6;
+    const game2TotalMatches = 8;
     let firstCard = null;
     let secondCard = null;
     let lockBoard = false;
@@ -1293,7 +1324,8 @@
       const grid = document.getElementById('memoryGrid');
       grid.innerHTML = '';
 
-      const emojis = ['🕷️', '💚', '✨', '💖', '👑', '🌷'];
+      // 8 parejas = 16 cartas total
+      const emojis = ['🕷️', '💚', '✨', '💖', '👑', '🌷', '🍎', '🎁'];
       let cardSymbols = [...emojis, ...emojis];
       cardSymbols.sort(() => Math.random() - 0.5);
 
@@ -1360,11 +1392,12 @@
 
     function unflipCards() {
       lockBoard = true;
+      // Penalización visual más rápida (400ms)
       setTimeout(() => {
         firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
         resetBoard();
-      }, 650);
+      }, 400);
     }
 
     function resetBoard() {
