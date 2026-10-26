@@ -297,6 +297,20 @@
       font-weight: 600;
     }
 
+    .btn-radar {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: #ffffff;
+      box-shadow: 0 5px 20px rgba(79, 172, 254, 0.35);
+      font-weight: 600;
+    }
+
+    .btn-fortune {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      color: #ffffff;
+      box-shadow: 0 5px 20px rgba(253, 160, 133, 0.4);
+      font-weight: 600;
+    }
+
     .btn-feel {
       background: linear-gradient(135deg, #ffd6e7, #ffb3cc);
       color: #8b0040;
@@ -494,7 +508,7 @@
     }
     .game-target {
       position: absolute;
-      font-size: 1.6rem;
+      font-size: 2.2rem;
       cursor: pointer;
       transform: translate(-50%, -50%);
       filter: drop-shadow(0 4px 8px rgba(181,0,91,0.25));
@@ -502,7 +516,7 @@
       -webkit-tap-highlight-color: transparent;
       will-change: left, top, transform, opacity;
       z-index: 10;
-      transition: left 0.35s ease-out, top 0.35s ease-out;
+      transition: left 0.45s ease-out, top 0.45s ease-out;
     }
     .game-target:active {
       transform: translate(-50%, -50%) scale(1.4);
@@ -531,14 +545,14 @@
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+      gap: 8px;
       width: 100%;
       margin: 8px 0 10px;
       perspective: 900px;
     }
     .memory-card {
-      height: 52px;
-      border-radius: 10px;
+      height: 70px;
+      border-radius: 12px;
       cursor: pointer;
       position: relative;
       transform-style: preserve-3d;
@@ -558,25 +572,86 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
     }
     .memory-back {
       background: linear-gradient(135deg, #845ec2, #d65db1);
       color: white;
-      font-size: 1.1rem;
+      font-size: 1.35rem;
       border: 2px solid #ffb3cc;
     }
     .memory-front {
       background: #ffffff;
-      font-size: 2.9rem;
+      font-size: 1.85rem;
       transform: rotateY(180deg);
       border: 2px solid #845ec2;
+      line-height: 1;
+    }
+
+    /* ═══════════════════════════════════════
+       NUEVAS SECCIONES: RADAR Y GALLETA
+    ═══════════════════════════════════════ */
+    .radar-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1.5px solid #a2d2ff;
+      box-shadow: 0 4px 18px rgba(79, 172, 254, 0.15);
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .radar-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+      color: #2b2d42;
+      line-height: 1.4;
+    }
+    .radar-item:last-child { margin-bottom: 0; }
+    .radar-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    .fortune-cookie-box {
+      background: #fffdf9;
+      border-radius: 16px;
+      padding: 20px 16px;
+      border: 1.5px dashed #fca311;
+      box-shadow: 0 4px 18px rgba(253, 160, 133, 0.2);
+      margin-bottom: 12px;
+    }
+    .cookie-emoji-anim {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .cookie-emoji-anim.crack {
+      animation: cookieBreak 0.5s ease forwards;
+    }
+    @keyframes cookieBreak {
+      0% { transform: scale(1) rotate(0deg); }
+      30% { transform: scale(1.2) rotate(-10deg); }
+      60% { transform: scale(1.2) rotate(10deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    .fortune-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.25rem;
+      color: #8b0040;
+      line-height: 1.5;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* ═══════════════════════════════════════
@@ -711,18 +786,18 @@
       <button class="modal-close-x" onclick="closeGame1Modal()">✕</button>
       
       <div class="game-header">
-        <h3 class="game-title">Caza-Puntos 🕷️⏱️ (Modo Extremo)</h3>
-        <p class="game-desc">¡Llega a 180 puntos en solo 10 segundos! Cuidado que se mueven rápido y hay bombas (💣 = -25pts).</p>
+        <h3 class="game-title">Caza-Puntos 🕷️⏱️</h3>
+        <p class="game-desc">Llega a 120 puntos en 15 segundos. ¡Toca rápido y evita las bombas!</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game1PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game1TimerPill">
-            <span>⏱️</span> <span id="game1Timer">10s</span>
+            <span>⏱️</span> <span id="game1Timer">15s</span>
           </div>
           <div class="game-score-badge">
-            Puntos: <span id="game1Score">0</span>/180
+            Puntos: <span id="game1Score">0</span>/120
           </div>
         </div>
 
@@ -776,23 +851,23 @@
       <button class="modal-close-x" onclick="closeGame2Modal()">✕</button>
       
       <div class="game-header">
-        <h3 class="game-title">Memorama Hardcore 🧠⚡</h3>
-        <p class="game-desc">¡Encuentra las 8 parejas (16 cartas en total) en solo 20 segundos!</p>
+        <h3 class="game-title">Memorama Flash 🧠⚡</h3>
+        <p class="game-desc">Encuentra las 6 parejas antes de que se acabe el tiempo. Tienes 35 segundos.</p>
       </div>
 
       <!-- Pantalla activa -->
       <div id="game2PlayScreen">
         <div class="game-top-bar">
           <div class="game-timer-pill" id="game2TimerPill">
-            <span>⏱️</span> <span id="game2Timer">20s</span>
+            <span>⏱️</span> <span id="game2Timer">35s</span>
           </div>
           <div class="game-score-badge">
-            Parejas: <span id="game2Matches">0</span>/8
+            Parejas: <span id="game2Matches">0</span>/6
           </div>
         </div>
 
         <div class="memory-grid" id="memoryGrid">
-          <!-- 16 cartas dinámicas -->
+          <!-- 12 cartas dinámicas -->
         </div>
       </div>
 
@@ -811,9 +886,9 @@
       <!-- Victoria -->
       <div class="game-win-screen" id="game2WinScreen">
         <div class="ticket-card" style="border-color:#845ec2;">
-          <div class="ticket-badge" style="background:linear-gradient(135deg, #845ec2, #d65db1);">🏆 Nivel God Superado 🏆</div>
+          <div class="ticket-badge" style="background:linear-gradient(135deg, #845ec2, #d65db1);">🏆 Nivel Pro Superado 🏆</div>
           <h4 class="ticket-title" style="color:#845ec2;">Vale para redimir🎮</h4>
-          <p class="ticket-for">Otorgado a: <strong>El amor mio con una super memoria  </strong> jajajaja </p>
+          <p class="ticket-for">Otorgado a: <strong>El amor mio con una super memoria </strong> jajajaja </p>
           <ul class="ticket-rewards">
             <li>👑 <span>¿Que quieres redimir? </span></li>
             <li>🎮 <span>Pase libre para abrazos y besitoss </span></li>
@@ -828,6 +903,62 @@
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Modal NUEVO: RADAR DEL AMOR -->
+  <div class="modal-overlay" id="radarModal">
+    <div class="modal-box game-modal-box">
+      <button class="modal-close-x" onclick="closeModal('radarModal')">✕</button>
+      
+      <div class="game-header">
+        <h3 class="game-title">Radar del Amor 🌦️💖</h3>
+        <p class="game-desc">Reporte del clima emocional en tiempo real de nosotros</p>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-item">
+          <span class="radar-icon">🌡️</span>
+          <div><strong>Temperatura:</strong> <span id="radarTemp">--</span></div>
+        </div>
+        <div class="radar-item">
+          <span class="radar-icon">💧</span>
+          <div><strong>Humedad / Probabilidad:</strong> <span id="radarHum">--</span></div>
+        </div>
+        <div class="radar-item">
+          <span class="radar-icon">💨</span>
+          <div><strong>Vientos:</strong> <span id="radarWind">--</span></div>
+        </div>
+        <div class="radar-item">
+          <span class="radar-icon">📌</span>
+          <div><strong>Estado del cielo:</strong> <span id="radarSky">--</span></div>
+        </div>
+      </div>
+
+      <button class="btn btn-radar" style="width:100%;" onclick="updateRadar()">
+        🔄 Actualizar clima emocional
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal NUEVO: GALLETA DE LA FORTUNA -->
+  <div class="modal-overlay" id="fortuneModal">
+    <div class="modal-box game-modal-box">
+      <button class="modal-close-x" onclick="closeModal('fortuneModal')">✕</button>
+      
+      <div class="game-header">
+        <h3 class="game-title">Galleta de la Fortuna 🥠✨</h3>
+        <p class="game-desc">Abre tu galleta para descubrir tu predicción del amor hoy</p>
+      </div>
+
+      <div class="fortune-cookie-box">
+        <div class="cookie-emoji-anim" id="cookieIcon" onclick="breakCookie()">🥠</div>
+        <div class="fortune-text" id="fortuneText">Toca la galleta o el botón para romperla...</div>
+      </div>
+
+      <button class="btn btn-fortune" style="width:100%;" onclick="breakCookie()">
+        🥠 Romper galleta de hoy
+      </button>
     </div>
   </div>
 
@@ -876,6 +1007,14 @@
         🧩 Juego 2: Memorama Flash ⏱️
       </button>
 
+      <button class="btn btn-radar" onclick="openRadarModal()">
+        🌦️ Radar del Amor
+      </button>
+
+      <button class="btn btn-fortune" onclick="openFortuneModal()">
+        🥠 Galleta de la Fortuna
+      </button>
+
       <button class="btn btn-feel" onclick="openModal('feelModal')">
         Toca aqui si te sientes mall
       </button>
@@ -896,7 +1035,7 @@
       for (let i = 0; i < 22; i++) {
         const el = document.createElement('span');
         el.classList.add('particle');
-        el.textContent              = symbols[Math.floor(Math.random() * symbols.length)];
+        el.textContent               = symbols[Math.floor(Math.random() * symbols.length)];
         el.style.left               = Math.random() * 100 + 'vw';
         el.style.animationDuration  = (7 + Math.random() * 9)  + 's';
         el.style.animationDelay     = (Math.random() * 12)      + 's';
@@ -1087,14 +1226,14 @@
     }
 
     /* ═══════════════════════════════════════
-       LÓGICA DEL JUEGO 1: CAZA-PUNTOS CONTRARRELOJ (MODO HARD)
+       LÓGICA DEL JUEGO 1: CAZA-PUNTOS (DIFICULTAD BALANCEADA)
     ═══════════════════════════════════════ */
     let game1Interval = null;
     let game1SpawnInterval = null;
     let game1MoveInterval = null;
-    let game1TimerVal = 10;
+    let game1TimerVal = 15;
     let game1ScoreVal = 0;
-    const game1TargetScore = 180;
+    const game1TargetScore = 120;
 
     function openGame1Modal() {
       openModal('game1Modal');
@@ -1115,7 +1254,7 @@
 
     function startGame1() {
       stopGame1();
-      game1TimerVal = 10;
+      game1TimerVal = 15;
       game1ScoreVal = 0;
 
       document.getElementById('game1PlayScreen').style.display = 'block';
@@ -1132,7 +1271,7 @@
         game1TimerVal--;
         document.getElementById('game1Timer').textContent = game1TimerVal + 's';
         const pill = document.getElementById('game1TimerPill');
-        if (game1TimerVal <= 3) {
+        if (game1TimerVal <= 4) {
           pill.classList.add('urgent');
         } else {
           pill.classList.remove('urgent');
@@ -1148,28 +1287,28 @@
         }
       }, 1000);
 
-      // Aparición muy rápida
+      // Ritmo de aparición accesible
       game1SpawnInterval = setInterval(() => {
         spawnGame1Target();
-      }, 220);
+      }, 350);
 
-      // Movimiento evasivo continuo
+      // Movimiento moderado y justo
       game1MoveInterval = setInterval(() => {
         moveGame1Targets();
-      }, 250);
+      }, 500);
     }
 
     function moveGame1Targets() {
       const arena = document.getElementById('game1Arena');
       if (!arena) return;
       const arenaRect = arena.getBoundingClientRect();
-      const maxX = arenaRect.width - 40;
-      const maxY = arenaRect.height - 40;
+      const maxX = arenaRect.width - 50;
+      const maxY = arenaRect.height - 50;
 
       const targets = arena.querySelectorAll('.game-target');
       targets.forEach(target => {
-        const x = Math.max(25, Math.floor(Math.random() * maxX));
-        const y = Math.max(25, Math.floor(Math.random() * maxY));
+        const x = Math.max(30, Math.floor(Math.random() * maxX));
+        const y = Math.max(30, Math.floor(Math.random() * maxY));
         target.style.left = x + 'px';
         target.style.top = y + 'px';
       });
@@ -1187,11 +1326,11 @@
       let pts = 10;
       let emoji = '🕷️';
 
-      if (rand < 0.25) {
+      if (rand < 0.15) {
         type = 'penalty';
-        pts = -25;
+        pts = -15;
         emoji = '💣';
-      } else if (rand < 0.45) {
+      } else if (rand < 0.40) {
         type = 'gold';
         pts = 20;
         emoji = '💚';
@@ -1200,16 +1339,15 @@
       item.textContent = emoji;
 
       const arenaRect = arena.getBoundingClientRect();
-      const maxX = arenaRect.width - 40;
-      const maxY = arenaRect.height - 40;
-      const x = Math.max(25, Math.floor(Math.random() * maxX));
-      const y = Math.max(25, Math.floor(Math.random() * maxY));
+      const maxX = arenaRect.width - 50;
+      const maxY = arenaRect.height - 50;
+      const x = Math.max(30, Math.floor(Math.random() * maxX));
+      const y = Math.max(30, Math.floor(Math.random() * maxY));
 
       item.style.left = x + 'px';
       item.style.top = y + 'px';
 
-      // Desaparecen muy rápido (450ms a 650ms)
-      const lifespan = type === 'gold' ? 450 : (type === 'penalty' ? 700 : 550);
+      const lifespan = type === 'gold' ? 750 : (type === 'penalty' ? 1000 : 850);
 
       const clickHandler = (e) => {
         e.stopPropagation();
@@ -1259,12 +1397,12 @@
     }
 
     /* ═══════════════════════════════════════
-       LÓGICA DEL JUEGO 2: MEMORAMA FLASH (MODO HARD)
+       LÓGICA DEL JUEGO 2: MEMORAMA FLASH (35s)
     ═══════════════════════════════════════ */
     let game2Interval = null;
-    let game2TimerVal = 20;
+    let game2TimerVal = 35;
     let game2MatchesVal = 0;
-    const game2TotalMatches = 8;
+    const game2TotalMatches = 6;
     let firstCard = null;
     let secondCard = null;
     let lockBoard = false;
@@ -1324,8 +1462,7 @@
       const grid = document.getElementById('memoryGrid');
       grid.innerHTML = '';
 
-      // 8 parejas = 16 cartas total
-      const emojis = ['🕷️', '💚', '✨', '💖', '👑', '🌷', '🍎', '🎁'];
+      const emojis = ['🕷️', '💚', '✨', '💖', '👑', '🌷'];
       let cardSymbols = [...emojis, ...emojis];
       cardSymbols.sort(() => Math.random() - 0.5);
 
@@ -1392,16 +1529,100 @@
 
     function unflipCards() {
       lockBoard = true;
-      // Penalización visual más rápida (400ms)
       setTimeout(() => {
         firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
         resetBoard();
-      }, 400);
+      }, 550);
     }
 
     function resetBoard() {
       [firstCard, secondCard, lockBoard] = [null, null, false];
+    }
+
+    /* ═══════════════════════════════════════
+       DATOS Y LÓGICA: RADAR DEL AMOR
+    ═══════════════════════════════════════ */
+    const radarTemperatures = [
+      "38°C de puro amor (Sensación térmica de: te extraño demasiado)",
+      "42°C de pura intensidad (Alerta roja por exceso de ganas de verte)",
+      "18°C de 'estoy aburrida (Se requiere presencia inmediata de abrazos)",
+      "50°C en el modo coder (Haciendo código en la u pero pensando solo en ti)"
+    ];
+
+    const radarHumidities = [
+      "100% de probabilidades de que me des un abrazo y no me sueltes",
+      "99.9% de probabilidad de que me robes un beso",
+      "80% de probabilidad de que me dejen en visto por ir a jugar JAJAJA",
+      "100% de antojo repentino de comer algo rico juntos"
+    ];
+
+    const radarWinds = [
+      "Fuertes brisas de regaños repentinos de parte de mary jein (¡precaución!)",
+      "Vientos huracanados de cosquillas sin previo aviso",
+      "Calma total: Cero peleas, 100% alcahuetería y paz mental",
+      "Probabilidad de turbulencia emocional (esperemos que no): Discusión express donde los dos se extrañan pero igual no se hablan (o bueno tu me ignoras)"
+    ];
+
+    const radarSkies = [
+      "Alerta de besitos inminentes 💋 (Abróchese el cinturón)",
+      "Cielo despejado: Ideal para mandar stickers de gatitos a cualquier hora",
+      "Lluvia de memes: Alta concentración de reels enviados por Instagram",
+      "Tormenta eléctrica: Alguien está de mal genio y necesita chocolate urgente"
+    ];
+
+    function openRadarModal() {
+      updateRadar();
+      openModal('radarModal');
+    }
+
+    function updateRadar() {
+      const getRandom = arr => arr[Math.floor(Math.random() * arr.length)];
+      document.getElementById('radarTemp').textContent = getRandom(radarTemperatures);
+      document.getElementById('radarHum').textContent = getRandom(radarHumidities);
+      document.getElementById('radarWind').textContent = getRandom(radarWinds);
+      document.getElementById('radarSky').textContent = getRandom(radarSkies);
+    }
+
+    /* ═══════════════════════════════════════
+       DATOS Y LÓGICA: GALLETA DE LA FORTUNA
+    ═══════════════════════════════════════ */
+    const fortuneMessages = [
+      "Tu fortuna de hoy: Hoy recibirás un 'te amo' inesperado a cualquier hora",
+      "El oráculo dice: Tu sonrisa es mi notificación favorita del día.",
+      "Señal del universo: Es el momento perfecto para enviarme un mensaje diciendo lo mucho que me amas.",
+      "Horóscopo del amor: Estás destinado a recibir amor y besos ilimitados hoy.",
+      "Predicción cósmica: En este preciso instante, alguien está pensando en ti y sonriendo frente a la pantalla.",
+      "Tu fortuna de hoy: Sobrevivirás a mis ocurrencias de hoy... o al menos lo intentarás con dignidad.",
+      "Advertencia del destino: Si me pides un antojo hoy, hay un 90% de probabilidades de que te diga que sí (aprovecha).",
+      "Oráculo travieso: Hoy tienes permitido ganar una discusión... es broma, eso nuncaaaaaaa pasará amor jajaj.",
+      "Mensaje oculto de la galleta: Tienes prohibido estar triste hoy, y si lo estás, me avisas para ir a molestarte hasta que te rías.",
+      "Predicción: Hoy gastarás energía explicándome algo y que tal vez (lo más probable) no entienda a la primera.",
+      "Fortuna buggeada: Has ganado un pase libre para que nos veamos y me des mucho amor",
+      "Nivel superado: El universo te concede un escudo contra mis regaños durante las próximas 2 horas.",
+      "Easter egg encontrado: Eres mi persona favorita en todo el multiverso (sí, más que a Spiderman)."
+    ];
+
+    function openFortuneModal() {
+      document.getElementById('fortuneText').textContent = "Toca la galleta o el botón para romperla...";
+      openModal('fortuneModal');
+    }
+
+    function breakCookie() {
+      const icon = document.getElementById('cookieIcon');
+      const text = document.getElementById('fortuneText');
+
+      icon.classList.remove('crack');
+      void icon.offsetWidth; // Force reflow
+      icon.classList.add('crack');
+
+      playCatchSound(true);
+
+      setTimeout(() => {
+        const randMsg = fortuneMessages[Math.floor(Math.random() * fortuneMessages.length)];
+        text.textContent = `"${randMsg}"`;
+        burstHearts();
+      }, 300);
     }
 
   </script>
