@@ -857,6 +857,190 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════
+       WIDGET TELEGRAM (NOTIFICACIONES Y MENSAJES RÁPIDOS)
+       ═══════════════════════════════════════════════════════════════ */
+    .telegram-card {
+      width: 100%;
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 24px;
+      padding: 16px 14px 13px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .telegram-card::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 20px;
+      border: 1px dashed var(--glass-subtle-border);
+      pointer-events: none;
+    }
+    .telegram-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(0.88rem, 3.2vw, 0.96rem);
+      color: var(--text-title);
+      letter-spacing: 0.3px;
+      text-align: center;
+    }
+    .telegram-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+    .telegram-quick-btn {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-subtle-border);
+      border-radius: 16px;
+      padding: 9px 8px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.78rem, 2.7vw, 0.85rem);
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(200, 120, 150, 0.08);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      user-select: none;
+      white-space: nowrap;
+    }
+    body.night-mode .telegram-quick-btn {
+      background: rgba(45, 26, 68, 0.65);
+      color: var(--text-main);
+    }
+    .telegram-quick-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(235, 120, 160, 0.6);
+      box-shadow: 0 6px 14px rgba(215, 110, 155, 0.22);
+      color: var(--text-title);
+    }
+    body.night-mode .telegram-quick-btn:hover:not(:disabled) {
+      background: rgba(65, 40, 95, 0.85);
+      color: #ffd0e3;
+    }
+    .telegram-quick-btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .telegram-quick-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .telegram-input-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      margin-top: 2px;
+    }
+    .telegram-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1.5px solid var(--glass-subtle-border);
+      border-radius: 30px;
+      padding: 9px 15px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(200, 120, 150, 0.06);
+      transition: all 0.25s ease;
+      min-width: 0;
+    }
+    body.night-mode .telegram-input {
+      background: rgba(35, 20, 52, 0.75);
+      color: var(--text-main);
+      border-color: rgba(200, 140, 190, 0.35);
+    }
+    .telegram-input:focus {
+      border-color: var(--btn-main-from);
+      box-shadow: 0 0 0 3px rgba(235, 104, 146, 0.2);
+      background: rgba(255, 255, 255, 0.95);
+    }
+    body.night-mode .telegram-input:focus {
+      background: rgba(50, 28, 75, 0.9);
+      border-color: var(--btn-main-from);
+    }
+    .telegram-input::placeholder {
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 0.8rem;
+    }
+
+    .telegram-send-btn {
+      background: linear-gradient(135deg, var(--btn-main-from) 0%, var(--btn-main-to) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 30px;
+      padding: 9px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px var(--btn-main-shadow);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .telegram-send-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 18px var(--btn-main-shadow);
+      filter: brightness(1.05);
+    }
+    .telegram-send-btn:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .telegram-send-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .telegram-status-msg {
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-height: 18px;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .telegram-status-msg.sending {
+      color: var(--text-accent);
+    }
+    .telegram-status-msg.success {
+      color: #2b9348;
+    }
+    .telegram-status-msg.error {
+      color: #d90429;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
        MODALES BASE (GLASSMORPHISM & COQUETTE BORDER)
        ═══════════════════════════════════════════════════════════════ */
     .modal-overlay {
@@ -1860,6 +2044,49 @@
 
     </div>
 
+    <!-- Widget Interactivo: Notificaciones rápidas y mensajes a Telegram -->
+    <div class="telegram-card" id="telegramCard">
+      <div class="telegram-header">
+        <span>💌</span>
+        <span>¿Cómo estás hoy? Toca para avisarme 💌</span>
+        <span>✨</span>
+      </div>
+
+      <!-- Cuadrícula de 2 columnas con 4 botones rápidos -->
+      <div class="telegram-grid">
+        <button class="telegram-quick-btn" onclick="sendQuickTelegram('🥺 Te extraño')">
+          <span>🥺</span> <span>Te extraño</span>
+        </button>
+        <button class="telegram-quick-btn" onclick="sendQuickTelegram('😴 Estoy cansado')">
+          <span>😴</span> <span>Estoy cansado</span>
+        </button>
+        <button class="telegram-quick-btn" onclick="sendQuickTelegram('🫂 Necesito un abrazo')">
+          <span>🫂</span> <span>Necesito un abrazo</span>
+        </button>
+        <button class="telegram-quick-btn" onclick="sendQuickTelegram('🍫 Tengo un antojo')">
+          <span>🍫</span> <span>Tengo un antojo</span>
+        </button>
+      </div>
+
+      <!-- Input de mensaje personalizado y botón enviar -->
+      <div class="telegram-input-row">
+        <input 
+          type="text" 
+          class="telegram-input" 
+          id="telegramCustomInput" 
+          placeholder="O escríbeme algo lindo aquí... ✍️" 
+          maxlength="200" 
+          autocomplete="off"
+        />
+        <button class="telegram-send-btn" id="telegramSendBtn" onclick="sendCustomTelegram()">
+          <span>Enviar 💌</span>
+        </button>
+      </div>
+
+      <!-- Mensaje de estado / feedback visual -->
+      <div class="telegram-status-msg" id="telegramStatusMsg"></div>
+    </div>
+
     <!-- Botón Destacado: Pedir Perdón en WhatsApp -->
     <button class="btn-wa-full" onclick="openWhatsApp()">
       <span style="font-size:1.3rem;">💬</span>
@@ -2188,6 +2415,10 @@
 
     // Número de WhatsApp para el botón y premios (con indicativo internacional)
     const WHATSAPP_NUMERO = "573122683028";
+
+    // Credenciales de Telegram para notificaciones y mensajes
+    const TELEGRAM_BOT_TOKEN = "9195801783:AAFj7L88PH9d99rZNpCVXpPzwhas6FBsOXA";
+    const TELEGRAM_CHAT_ID = "8465683044";
 
 
     /* ═══════════════════════════════════════════════════════════════
@@ -3228,6 +3459,129 @@
       const mensaje = encodeURIComponent('Holaaa, vengo a pedir perdón porque no aguanto el orgullo con mi mujerrrr 💕');
       window.open('https://wa.me/' + WHATSAPP_NUMERO + '?text=' + mensaje, '_blank');
     }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       17. WIDGET TELEGRAM (NOTIFICACIONES RÁPIDAS Y MENSAJES)
+       ═══════════════════════════════════════════════════════════════ */
+    let isTelegramCoolingDown = false;
+
+    function getFormattedTime() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+
+    function setTelegramDisabled(disabled) {
+      const quickBtns = document.querySelectorAll('.telegram-quick-btn');
+      const inputEl   = document.getElementById('telegramCustomInput');
+      const sendBtn   = document.getElementById('telegramSendBtn');
+
+      quickBtns.forEach(btn => btn.disabled = disabled);
+      if (inputEl) inputEl.disabled = disabled;
+      if (sendBtn) sendBtn.disabled = disabled;
+    }
+
+    async function sendTelegramMessage(textToSend, isCustom = false) {
+      if (isTelegramCoolingDown) return;
+
+      const statusEl = document.getElementById('telegramStatusMsg');
+      const cardEl   = document.getElementById('telegramCard');
+      const inputEl  = document.getElementById('telegramCustomInput');
+
+      statusEl.textContent = "Enviando aviso... ✨";
+      statusEl.className = "telegram-status-msg sending";
+      setTelegramDisabled(true);
+
+      const horaActual = getFormattedTime();
+      let markdownText = "";
+
+      if (isCustom) {
+        markdownText = `💌 *Mensaje de tu amorcito* 💌\n\n« _${textToSend}_ »\n\n⏰ *Hora:* ${horaActual}`;
+      } else {
+        markdownText = `💌 *Aviso rápido de tu amorcito* 💌\n\n*Estado:* ${textToSend}\n⏰ *Hora:* ${horaActual}`;
+      }
+
+      try {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            parse_mode: "Markdown",
+            text: markdownText
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          statusEl.textContent = "¡Listo! Ya me llegó tu notificación 💕";
+          statusEl.className = "telegram-status-msg success";
+          playKeyTone(780);
+          burstHearts(cardEl);
+
+          if (isCustom && inputEl) {
+            inputEl.value = "";
+          }
+
+          // Anti-spam de 5 segundos tras envío exitoso
+          isTelegramCoolingDown = true;
+          setTimeout(() => {
+            isTelegramCoolingDown = false;
+            setTelegramDisabled(false);
+          }, 5000);
+
+          // Limpiar mensaje de éxito después de 4 segundos
+          setTimeout(() => {
+            if (statusEl.textContent.includes("¡Listo!")) {
+              statusEl.textContent = "";
+              statusEl.className = "telegram-status-msg";
+            }
+          }, 4000);
+
+        } else {
+          throw new Error(data.description || "Error de Telegram");
+        }
+      } catch (err) {
+        console.error("Error al enviar a Telegram:", err);
+        statusEl.textContent = "Ups, no se pudo enviar. Intenta otra vez 🥺";
+        statusEl.className = "telegram-status-msg error";
+        playFailSound();
+        setTelegramDisabled(false);
+
+        setTimeout(() => {
+          if (statusEl.textContent.includes("Ups")) {
+            statusEl.textContent = "";
+            statusEl.className = "telegram-status-msg";
+          }
+        }, 4000);
+      }
+    }
+
+    function sendQuickTelegram(statusText) {
+      sendTelegramMessage(statusText, false);
+    }
+
+    function sendCustomTelegram() {
+      const inputEl = document.getElementById('telegramCustomInput');
+      if (!inputEl) return;
+      const text = inputEl.value.trim();
+      if (!text) {
+        inputEl.focus();
+        return;
+      }
+      sendTelegramMessage(text, true);
+    }
+
+    // Permitir enviar al presionar la tecla Enter en el input
+    document.getElementById('telegramCustomInput')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendCustomTelegram();
+      }
+    });
 
   </script>
 </body>
