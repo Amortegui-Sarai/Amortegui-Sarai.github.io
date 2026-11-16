@@ -3496,9 +3496,9 @@
       let markdownText = "";
 
       if (isCustom) {
-        markdownText = `💌 *Mensaje de tu amorcito* 💌\n\n« _${textToSend}_ »\n\n⏰ *Hora:* ${horaActual}`;
+        markdownText = `💌 \n\n« _${textToSend}_ »\n\n⏰ *Hora:* ${horaActual}`;
       } else {
-        markdownText = `💌 *Aviso rápido de tu amorcito* 💌\n\n*Estado:* ${textToSend}\n⏰ *Hora:* ${horaActual}`;
+        markdownText = `💌\n\n*Estado:* ${textToSend}\n⏰ *Hora:* ${horaActual}`;
       }
 
       try {
