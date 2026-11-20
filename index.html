@@ -1070,33 +1070,66 @@
 
     /* Modal Porcentaje de Amor */
     .love-test-box {
-      max-width: 440px;
-      padding: 24px 18px 20px;
+      max-width: 470px;
+      width: 92%;
+      padding: 48px 22px 24px;
+      border-radius: 28px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+
+    .love-test-box .modal-close-x {
+      top: 14px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--lt-card-bg);
+      border: 1.5px solid var(--lt-border);
+      color: var(--lt-title);
+      font-size: 1rem;
+      font-weight: 800;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      z-index: 12;
+    }
+    .love-test-box .modal-close-x:hover {
+      background: var(--lt-primary);
+      color: #ffffff;
+      border-color: transparent;
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 4px 14px var(--lt-btn-shadow);
     }
 
     /* Variables temáticas para Ella (Rosa) */
     .love-test-box.theme-she {
-      --lt-primary: #eb6892;
-      --lt-primary-dark: #ca396c;
-      --lt-accent: #f472b6;
-      --lt-bg: linear-gradient(150deg, #fff9fb 0%, #ffeef5 100%);
-      --lt-border: rgba(240, 180, 202, 0.7);
-      --lt-card-bg: rgba(255, 240, 246, 0.65);
-      --lt-btn-from: #f26b8d;
-      --lt-btn-to: #c43360;
-      --lt-btn-shadow: rgba(242, 107, 141, 0.32);
-      --lt-text: #6c2d42;
-      --lt-title: #ab2858;
-      --lt-highlight: #ffedf4;
+      --lt-primary: #e05688;
+      --lt-primary-dark: #b8265a;
+      --lt-accent: #f07ea8;
+      --lt-bg: linear-gradient(155deg, #fffafd 0%, #fff0f6 50%, #ffe6f0 100%);
+      --lt-border: rgba(235, 155, 185, 0.65);
+      --lt-card-bg: rgba(255, 242, 248, 0.75);
+      --lt-btn-from: #f06292;
+      --lt-btn-to: #c2185b;
+      --lt-btn-shadow: rgba(240, 98, 146, 0.35);
+      --lt-text: #5a1f33;
+      --lt-title: #a82352;
+      --lt-highlight: #ffeaf2;
     }
     body.night-mode .love-test-box.theme-she {
-      --lt-bg: linear-gradient(150deg, #2b1328 0%, #1c0c1b 100%);
-      --lt-border: rgba(220, 150, 190, 0.35);
-      --lt-card-bg: rgba(45, 20, 42, 0.7);
-      --lt-text: #f5dce7;
-      --lt-title: #ff9ec4;
-      --lt-highlight: #3a1836;
+      --lt-bg: linear-gradient(155deg, #2d1428 0%, #200d1c 100%);
+      --lt-border: rgba(230, 140, 180, 0.38);
+      --lt-card-bg: rgba(50, 22, 44, 0.75);
+      --lt-btn-from: #f06292;
+      --lt-btn-to: #ad1457;
+      --lt-btn-shadow: rgba(240, 98, 146, 0.4);
+      --lt-text: #fde8f1;
+      --lt-title: #ffa6c9;
+      --lt-highlight: #421838;
     }
 
     /* Variables temáticas para Él (Azul) */
@@ -1104,23 +1137,26 @@
       --lt-primary: #3b82f6;
       --lt-primary-dark: #1d4ed8;
       --lt-accent: #60a5fa;
-      --lt-bg: linear-gradient(150deg, #f4f9ff 0%, #e5f0fe 100%);
-      --lt-border: rgba(160, 200, 245, 0.75);
-      --lt-card-bg: rgba(230, 242, 255, 0.7);
+      --lt-bg: linear-gradient(155deg, #f5f9ff 0%, #eaf3fe 50%, #ddecfd 100%);
+      --lt-border: rgba(150, 195, 245, 0.7);
+      --lt-card-bg: rgba(235, 244, 255, 0.75);
       --lt-btn-from: #4f96d6;
       --lt-btn-to: #2563ab;
       --lt-btn-shadow: rgba(59, 130, 246, 0.35);
-      --lt-text: #1e3a8a;
-      --lt-title: #1d4ed8;
-      --lt-highlight: #e0f0fe;
+      --lt-text: #17326b;
+      --lt-title: #1e40af;
+      --lt-highlight: #e2f0fe;
     }
     body.night-mode .love-test-box.theme-he {
-      --lt-bg: linear-gradient(150deg, #12213a 0%, #0d1627 100%);
-      --lt-border: rgba(130, 180, 235, 0.35);
-      --lt-card-bg: rgba(20, 36, 62, 0.7);
-      --lt-text: #dbeafe;
+      --lt-bg: linear-gradient(155deg, #101c33 0%, #0c1424 100%);
+      --lt-border: rgba(120, 175, 240, 0.38);
+      --lt-card-bg: rgba(18, 34, 60, 0.75);
+      --lt-btn-from: #4f96d6;
+      --lt-btn-to: #1e40af;
+      --lt-btn-shadow: rgba(59, 130, 246, 0.4);
+      --lt-text: #e0edff;
       --lt-title: #93c5fd;
-      --lt-highlight: #193154;
+      --lt-highlight: #162a4a;
     }
 
     .love-test-box {
@@ -1130,13 +1166,13 @@
     }
     .lt-title {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       color: var(--lt-title);
       margin-bottom: 2px;
       line-height: 1.1;
     }
     .lt-subtitle {
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       color: var(--lt-text);
       font-style: italic;
       margin-bottom: 12px;
@@ -1146,29 +1182,30 @@
       background: var(--lt-card-bg);
       border: 1px solid var(--lt-border);
       color: var(--lt-title);
-      font-size: 0.73rem;
-      font-weight: 700;
-      padding: 3px 12px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 14px;
       border-radius: 20px;
       margin-bottom: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
     .lt-card-subtle {
       background: var(--lt-card-bg);
-      border: 1px dashed var(--lt-border);
-      border-radius: 16px;
-      padding: 14px;
+      border: 1.5px dashed var(--lt-border);
+      border-radius: 20px;
+      padding: 16px 14px;
       margin: 12px 0 16px;
       text-align: center;
     }
 
     /* Role Picker */
     .lt-role-picker {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       text-align: left;
     }
     .lt-field-label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 800;
       color: var(--lt-title);
       margin-bottom: 6px;
@@ -1179,26 +1216,32 @@
     }
     .lt-role-btn {
       flex: 1;
-      padding: 10px 14px;
-      border-radius: 16px;
-      border: 1.5px solid var(--lt-border);
-      background: rgba(255, 255, 255, 0.5);
+      padding: 11px 16px;
+      border-radius: 18px;
+      border: 1.8px solid var(--lt-border);
+      background: rgba(255, 255, 255, 0.65);
       color: var(--lt-text);
       font-family: 'Nunito', sans-serif;
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       cursor: pointer;
-      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: all 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
     }
     body.night-mode .lt-role-btn {
-      background: rgba(40, 25, 55, 0.5);
+      background: rgba(40, 25, 55, 0.55);
+    }
+    .lt-role-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--lt-primary);
+      background: var(--lt-highlight);
     }
     .lt-role-btn.active {
       background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to));
       color: #ffffff;
       border-color: transparent;
-      box-shadow: 0 4px 14px var(--lt-btn-shadow);
-      transform: translateY(-2px);
+      box-shadow: 0 6px 18px var(--lt-btn-shadow);
+      transform: translateY(-2px) scale(1.02);
     }
 
     /* Inputs */
@@ -1207,84 +1250,96 @@
       text-align: left;
     }
     .lt-field-hint {
-      font-size: 0.74rem;
+      font-size: 0.75rem;
       color: var(--lt-text);
-      opacity: 0.85;
+      opacity: 0.88;
       font-style: italic;
       margin-bottom: 6px;
       line-height: 1.35;
     }
     .lt-text-input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.75);
-      border: 1.5px solid var(--lt-border);
-      border-radius: 16px;
-      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.8px solid var(--lt-border);
+      border-radius: 18px;
+      padding: 11px 16px;
       font-family: 'Nunito', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--lt-text);
       outline: none;
-      transition: all 0.2s ease;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: all 0.25s ease;
     }
     body.night-mode .lt-text-input {
-      background: rgba(30, 20, 45, 0.75);
+      background: rgba(30, 20, 45, 0.8);
       color: var(--lt-text);
     }
     .lt-text-input:focus {
       border-color: var(--lt-primary);
-      box-shadow: 0 0 0 3px rgba(100, 160, 240, 0.25);
+      box-shadow: 0 0 0 3.5px var(--lt-btn-shadow);
+      background: #ffffff;
     }
+    body.night-mode .lt-text-input:focus {
+      background: rgba(45, 25, 60, 0.9);
+    }
+
     .lt-textarea {
       width: 100%;
-      background: rgba(255, 255, 255, 0.75);
-      border: 1.5px solid var(--lt-border);
-      border-radius: 16px;
-      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.8px solid var(--lt-border);
+      border-radius: 18px;
+      padding: 11px 16px;
       font-family: 'Nunito', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--lt-text);
       outline: none;
       resize: none;
-      transition: all 0.2s ease;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: all 0.25s ease;
     }
     body.night-mode .lt-textarea {
-      background: rgba(30, 20, 45, 0.75);
+      background: rgba(30, 20, 45, 0.8);
       color: var(--lt-text);
     }
     .lt-textarea:focus {
       border-color: var(--lt-primary);
-      box-shadow: 0 0 0 3px rgba(100, 160, 240, 0.25);
+      box-shadow: 0 0 0 3.5px var(--lt-btn-shadow);
+      background: #ffffff;
     }
+    body.night-mode .lt-textarea:focus {
+      background: rgba(45, 25, 60, 0.9);
+    }
+
     .lt-bonus-indicator {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.78rem;
+      font-weight: 800;
       color: var(--lt-title);
-      margin-top: 4px;
+      margin-top: 5px;
       text-align: right;
     }
 
     /* Oath Box */
     .lt-oath-box {
       background: var(--lt-card-bg);
-      border: 1.5px dashed var(--lt-border);
-      border-radius: 16px;
-      padding: 11px 12px;
-      margin: 10px 0 16px;
+      border: 1.8px dashed var(--lt-border);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin: 12px 0 16px;
       text-align: left;
     }
     .lt-oath-label {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 0.82rem;
+      font-size: 0.83rem;
       color: var(--lt-text);
-      line-height: 1.4;
+      line-height: 1.42;
       cursor: pointer;
     }
     .lt-checkbox {
       margin-top: 3px;
-      width: 18px;
-      height: 18px;
+      width: 19px;
+      height: 19px;
       accent-color: var(--lt-primary);
       cursor: pointer;
       flex-shrink: 0;
@@ -1295,7 +1350,19 @@
       width: 100%;
       background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to)) !important;
       color: #ffffff !important;
+      border-radius: 20px !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-weight: 800 !important;
+      font-size: 0.98rem !important;
+      padding: 13px 20px !important;
       box-shadow: 0 6px 20px var(--lt-btn-shadow) !important;
+      border: none !important;
+      cursor: pointer;
+      transition: all 0.28s cubic-bezier(0.34, 1.3, 0.64, 1) !important;
+    }
+    .lt-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 24px var(--lt-btn-shadow) !important;
     }
     .lt-btn:disabled {
       opacity: 0.55;
@@ -1307,109 +1374,254 @@
       width: 100%;
       background: transparent !important;
       color: var(--lt-title) !important;
-      border: 1.5px solid var(--lt-border) !important;
+      border: 1.8px solid var(--lt-border) !important;
+      border-radius: 20px !important;
+      font-family: 'Nunito', sans-serif !important;
+      font-weight: 800 !important;
       box-shadow: none !important;
       margin-top: 8px;
+      padding: 11px 18px !important;
+    }
+    .lt-btn-secondary:hover {
+      background: var(--lt-highlight) !important;
+      border-color: var(--lt-primary) !important;
+      transform: translateY(-2px);
     }
     .lt-btn-wa {
       flex: 1;
       background: linear-gradient(135deg, #25d366, #128c7e) !important;
       color: #ffffff !important;
+      border-radius: 20px !important;
+      font-weight: 800 !important;
       box-shadow: 0 6px 18px rgba(18, 140, 126, 0.3) !important;
     }
 
-    /* Questions Screen */
+    /* ═══════════════════════════════════════════════════════════════
+       QUESTIONS SCREEN (Rediseñado Coquette & Limpio)
+       ═══════════════════════════════════════════════════════════════ */
     .lt-q-topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
-      font-size: 0.82rem;
+      padding: 9px 16px;
+      background: var(--lt-card-bg);
+      border: 1.5px solid var(--lt-border);
+      border-radius: 22px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .lt-q-counter {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
       font-weight: 800;
       color: var(--lt-title);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
+    .lt-q-score-preview {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--lt-primary-dark);
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--lt-border);
+      padding: 3px 12px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    body.night-mode .lt-q-score-preview {
+      background: rgba(30, 20, 45, 0.75);
+      color: var(--lt-title);
+    }
+
     .lt-progress-track {
       width: 100%;
       height: 8px;
-      background: rgba(200, 200, 220, 0.3);
+      background: rgba(180, 180, 200, 0.22);
       border-radius: 20px;
       overflow: hidden;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
     }
     .lt-progress-fill {
       height: 100%;
       width: 20%;
       background: linear-gradient(90deg, var(--lt-btn-from), var(--lt-btn-to));
       border-radius: 20px;
-      transition: width 0.3s ease;
+      box-shadow: 0 0 8px var(--lt-btn-shadow);
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+
     .lt-question-text {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 3.8vw, 1.15rem);
+      font-size: clamp(1.02rem, 3.8vw, 1.18rem);
       font-weight: 700;
       color: var(--lt-title);
-      line-height: 1.45;
-      margin-bottom: 16px;
-      min-height: 52px;
+      line-height: 1.5;
+      background: var(--lt-card-bg);
+      border: 1.8px solid var(--lt-border);
+      border-radius: 22px;
+      padding: 18px 18px;
+      margin: 12px 0 18px;
+      min-height: 64px;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(8px);
     }
+
     .lt-options-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       width: 100%;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
+
+    /* Botones de opción / respuesta */
+    .lt-option-btn,
     .lt-opt-btn {
-      background: rgba(255, 255, 255, 0.65);
-      border: 1.5px solid var(--lt-border);
-      border-radius: 16px;
-      padding: 12px 14px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.8px solid var(--lt-border);
+      border-radius: 20px;
       font-family: 'Nunito', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--lt-text);
       cursor: pointer;
       text-align: left;
-      line-height: 1.35;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      line-height: 1.38;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+      transition: all 0.28s cubic-bezier(0.34, 1.3, 0.64, 1);
       position: relative;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
     }
+
+    body.night-mode .lt-option-btn,
     body.night-mode .lt-opt-btn {
-      background: rgba(35, 22, 50, 0.65);
+      background: rgba(30, 18, 40, 0.8);
+      border-color: var(--lt-border);
+      color: var(--lt-text);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
     }
+
+    .lt-opt-bullet {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--lt-card-bg);
+      border: 1.5px solid var(--lt-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .lt-opt-text {
+      flex: 1;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .lt-option-btn:hover:not(:disabled),
     .lt-opt-btn:hover:not(:disabled) {
-      transform: translateY(-2px) scale(1.015);
+      transform: translateY(-3px) scale(1.015);
       background: var(--lt-highlight);
       border-color: var(--lt-primary);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px var(--lt-btn-shadow);
+      color: var(--lt-title);
     }
+
+    .lt-option-btn:hover:not(:disabled) .lt-opt-bullet,
+    .lt-opt-btn:hover:not(:disabled) .lt-opt-bullet {
+      transform: scale(1.15) rotate(8deg);
+      border-color: var(--lt-primary);
+      background: #ffffff;
+    }
+
+    .lt-option-btn.selected,
     .lt-opt-btn.selected {
       background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to)) !important;
       color: #ffffff !important;
       border-color: transparent !important;
-      box-shadow: 0 6px 18px var(--lt-btn-shadow) !important;
-      transform: scale(1.02);
+      box-shadow: 0 8px 26px var(--lt-btn-shadow) !important;
+      transform: scale(1.025) !important;
     }
+
+    .lt-option-btn.selected .lt-opt-bullet,
+    .lt-opt-btn.selected .lt-opt-bullet {
+      background: rgba(255, 255, 255, 0.3) !important;
+      border-color: rgba(255, 255, 255, 0.8) !important;
+      transform: scale(1.15) !important;
+    }
+
+    .lt-option-btn.selected .lt-opt-text,
+    .lt-opt-btn.selected .lt-opt-text {
+      color: #ffffff !important;
+    }
+
+    .lt-opt-pts-badge {
+      margin-left: auto;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      animation: ltBadgePop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes ltBadgePop {
+      0% { transform: scale(0.4); opacity: 0; }
+      80% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
     .lt-point-feedback {
-      min-height: 24px;
+      min-height: 28px;
       font-family: 'Great Vibes', cursive;
-      font-size: 1.4rem;
+      font-size: 1.55rem;
       font-weight: 700;
       color: var(--lt-title);
+      text-align: center;
       transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    .lt-point-feedback.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Result Screen */
     .lt-percentage-badge {
-      width: 130px;
-      height: 130px;
+      width: 136px;
+      height: 136px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to));
-      box-shadow: 0 10px 28px var(--lt-btn-shadow);
+      box-shadow: 0 10px 30px var(--lt-btn-shadow);
       margin: 12px auto 14px;
       display: flex;
       flex-direction: column;
@@ -1419,6 +1631,7 @@
       animation: heartbeat 2.5s infinite ease-in-out;
     }
     .lt-pct-number {
+      font-family: 'Quicksand', 'Nunito', sans-serif;
       font-size: 2.3rem;
       font-weight: 800;
       line-height: 1;
@@ -1428,44 +1641,44 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 700;
-      opacity: 0.9;
-      margin-top: 2px;
+      opacity: 0.92;
+      margin-top: 3px;
     }
     .lt-result-date {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--lt-text);
       font-style: italic;
       margin-bottom: 4px;
     }
     .lt-verdict-text {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-style: italic;
       color: var(--lt-text);
       line-height: 1.55;
       margin-bottom: 14px;
-      padding: 0 6px;
+      padding: 0 8px;
     }
     .lt-summary-card {
       background: var(--lt-card-bg);
-      border: 1px dashed var(--lt-border);
-      border-radius: 16px;
-      padding: 12px 14px;
+      border: 1.5px dashed var(--lt-border);
+      border-radius: 20px;
+      padding: 14px 16px;
       text-align: left;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .lt-summary-header {
       display: flex;
       justify-content: space-between;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
       color: var(--lt-title);
       margin-bottom: 8px;
     }
     .lt-summary-list {
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      font-size: 0.78rem;
+      gap: 6px;
+      font-size: 0.79rem;
       color: var(--lt-text);
       line-height: 1.35;
       max-height: 140px;
@@ -1496,8 +1709,25 @@
     }
     .lt-actions-row .btn-coquette-action {
       flex: 1;
-      padding: 11px 12px;
-      font-size: 0.86rem;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 480px) {
+      .love-test-box {
+        padding: 44px 16px 20px;
+        width: 95%;
+        border-radius: 24px;
+      }
+      .lt-question-text {
+        font-size: 1rem;
+        padding: 15px 12px;
+      }
+      .lt-option-btn,
+      .lt-opt-btn {
+        padding: 12px 14px;
+        font-size: 0.88rem;
+      }
     }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -4460,8 +4690,8 @@
       const q = currentLtQuestions[index];
       if (!q) return;
 
-      document.getElementById('ltQCounter').textContent = `Pregunta ${index + 1} de ${currentLtQuestions.length}`;
-      document.getElementById('ltQScorePreview').textContent = `Puntos: ${currentLtScore}`;
+      document.getElementById('ltQCounter').innerHTML = `<span>📖</span> Pregunta ${index + 1} de ${currentLtQuestions.length}`;
+      document.getElementById('ltQScorePreview').innerHTML = `<span>✨</span> ${currentLtScore} pts`;
 
       const pct = Math.round((index / currentLtQuestions.length) * 100);
       document.getElementById('ltProgressFill').style.width = pct + '%';
@@ -4481,7 +4711,17 @@
         const btn = document.createElement('button');
         btn.className = 'lt-option-btn';
         btn.type = 'button';
-        btn.textContent = opt.text;
+
+        const bullet = document.createElement('span');
+        bullet.className = 'lt-opt-bullet';
+        bullet.textContent = currentLtRole === 'he' ? '💙' : '💗';
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'lt-opt-text';
+        textSpan.textContent = opt.text;
+
+        btn.appendChild(bullet);
+        btn.appendChild(textSpan);
 
         btn.onclick = () => handleLtOptionSelect(opt, btn, q.q);
         optionsList.appendChild(btn);
@@ -4503,20 +4743,24 @@
 
       clickedBtn.classList.add('selected');
 
+      const bullet = clickedBtn.querySelector('.lt-opt-bullet');
+      if (bullet) bullet.textContent = '✨';
+
       const badge = document.createElement('span');
       badge.className = 'lt-opt-pts-badge';
       badge.textContent = `+${selectedOpt.pts} pts ✨`;
       clickedBtn.appendChild(badge);
 
       const feedbackEl = document.getElementById('ltPointFeedback');
-      feedbackEl.textContent = `¡Sumaste +${selectedOpt.pts} puntos de amor! 💖`;
+      feedbackEl.innerHTML = `¡Sumaste +${selectedOpt.pts} puntos de amor! 💖✨`;
       feedbackEl.className = 'lt-point-feedback show';
 
       const allBtns = document.querySelectorAll('#ltOptionsList .lt-option-btn');
       allBtns.forEach(btn => {
         btn.disabled = true;
         if (btn !== clickedBtn) {
-          btn.style.opacity = '0.5';
+          btn.style.opacity = '0.45';
+          btn.style.transform = 'none';
         }
       });
 
@@ -4527,7 +4771,7 @@
         } else {
           finishLoveTest();
         }
-      }, 900);
+      }, 950);
     }
 
     function finishLoveTest() {
