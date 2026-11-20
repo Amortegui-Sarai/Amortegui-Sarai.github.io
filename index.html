@@ -1041,6 +1041,466 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════
+       NUEVA FUNCIONALIDAD: PORCENTAJE DE AMOR (ÉL / ELLA)
+       ═══════════════════════════════════════════════════════════════ */
+    .card-love-test {
+      grid-column: span 2;
+      background: linear-gradient(135deg, rgba(255, 238, 246, 0.9) 0%, rgba(235, 244, 255, 0.9) 100%);
+      border: 1.5px solid rgba(220, 160, 210, 0.65);
+      flex-direction: row;
+      gap: 14px;
+      padding: 12px 18px;
+      min-height: 82px;
+      text-align: left;
+    }
+    body.night-mode .card-love-test {
+      background: linear-gradient(135deg, rgba(48, 22, 58, 0.85) 0%, rgba(22, 34, 62, 0.85) 100%);
+      border-color: rgba(180, 140, 220, 0.45);
+    }
+    .card-love-test .card-icon-wrap {
+      color: #e85d75;
+      flex-shrink: 0;
+      font-size: 1.55rem;
+      width: 48px;
+      height: 48px;
+    }
+    .card-love-test .card-title {
+      font-size: clamp(0.92rem, 3.2vw, 1.05rem);
+    }
+
+    /* Modal Porcentaje de Amor */
+    .love-test-box {
+      max-width: 440px;
+      padding: 24px 18px 20px;
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* Variables temáticas para Ella (Rosa) */
+    .love-test-box.theme-she {
+      --lt-primary: #eb6892;
+      --lt-primary-dark: #ca396c;
+      --lt-accent: #f472b6;
+      --lt-bg: linear-gradient(150deg, #fff9fb 0%, #ffeef5 100%);
+      --lt-border: rgba(240, 180, 202, 0.7);
+      --lt-card-bg: rgba(255, 240, 246, 0.65);
+      --lt-btn-from: #f26b8d;
+      --lt-btn-to: #c43360;
+      --lt-btn-shadow: rgba(242, 107, 141, 0.32);
+      --lt-text: #6c2d42;
+      --lt-title: #ab2858;
+      --lt-highlight: #ffedf4;
+    }
+    body.night-mode .love-test-box.theme-she {
+      --lt-bg: linear-gradient(150deg, #2b1328 0%, #1c0c1b 100%);
+      --lt-border: rgba(220, 150, 190, 0.35);
+      --lt-card-bg: rgba(45, 20, 42, 0.7);
+      --lt-text: #f5dce7;
+      --lt-title: #ff9ec4;
+      --lt-highlight: #3a1836;
+    }
+
+    /* Variables temáticas para Él (Azul) */
+    .love-test-box.theme-he {
+      --lt-primary: #3b82f6;
+      --lt-primary-dark: #1d4ed8;
+      --lt-accent: #60a5fa;
+      --lt-bg: linear-gradient(150deg, #f4f9ff 0%, #e5f0fe 100%);
+      --lt-border: rgba(160, 200, 245, 0.75);
+      --lt-card-bg: rgba(230, 242, 255, 0.7);
+      --lt-btn-from: #4f96d6;
+      --lt-btn-to: #2563ab;
+      --lt-btn-shadow: rgba(59, 130, 246, 0.35);
+      --lt-text: #1e3a8a;
+      --lt-title: #1d4ed8;
+      --lt-highlight: #e0f0fe;
+    }
+    body.night-mode .love-test-box.theme-he {
+      --lt-bg: linear-gradient(150deg, #12213a 0%, #0d1627 100%);
+      --lt-border: rgba(130, 180, 235, 0.35);
+      --lt-card-bg: rgba(20, 36, 62, 0.7);
+      --lt-text: #dbeafe;
+      --lt-title: #93c5fd;
+      --lt-highlight: #193154;
+    }
+
+    .love-test-box {
+      background: var(--lt-bg);
+      border-color: var(--lt-border);
+      color: var(--lt-text);
+    }
+    .lt-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: var(--lt-title);
+      margin-bottom: 2px;
+      line-height: 1.1;
+    }
+    .lt-subtitle {
+      font-size: 0.85rem;
+      color: var(--lt-text);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .lt-daily-badge {
+      display: inline-block;
+      background: var(--lt-card-bg);
+      border: 1px solid var(--lt-border);
+      color: var(--lt-title);
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .lt-card-subtle {
+      background: var(--lt-card-bg);
+      border: 1px dashed var(--lt-border);
+      border-radius: 16px;
+      padding: 14px;
+      margin: 12px 0 16px;
+      text-align: center;
+    }
+
+    /* Role Picker */
+    .lt-role-picker {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .lt-field-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--lt-title);
+      margin-bottom: 6px;
+    }
+    .lt-role-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .lt-role-btn {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1.5px solid var(--lt-border);
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--lt-text);
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    body.night-mode .lt-role-btn {
+      background: rgba(40, 25, 55, 0.5);
+    }
+    .lt-role-btn.active {
+      background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px var(--lt-btn-shadow);
+      transform: translateY(-2px);
+    }
+
+    /* Inputs */
+    .lt-input-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .lt-field-hint {
+      font-size: 0.74rem;
+      color: var(--lt-text);
+      opacity: 0.85;
+      font-style: italic;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .lt-text-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1.5px solid var(--lt-border);
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      color: var(--lt-text);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    body.night-mode .lt-text-input {
+      background: rgba(30, 20, 45, 0.75);
+      color: var(--lt-text);
+    }
+    .lt-text-input:focus {
+      border-color: var(--lt-primary);
+      box-shadow: 0 0 0 3px rgba(100, 160, 240, 0.25);
+    }
+    .lt-textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1.5px solid var(--lt-border);
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      color: var(--lt-text);
+      outline: none;
+      resize: none;
+      transition: all 0.2s ease;
+    }
+    body.night-mode .lt-textarea {
+      background: rgba(30, 20, 45, 0.75);
+      color: var(--lt-text);
+    }
+    .lt-textarea:focus {
+      border-color: var(--lt-primary);
+      box-shadow: 0 0 0 3px rgba(100, 160, 240, 0.25);
+    }
+    .lt-bonus-indicator {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--lt-title);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    /* Oath Box */
+    .lt-oath-box {
+      background: var(--lt-card-bg);
+      border: 1.5px dashed var(--lt-border);
+      border-radius: 16px;
+      padding: 11px 12px;
+      margin: 10px 0 16px;
+      text-align: left;
+    }
+    .lt-oath-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--lt-text);
+      line-height: 1.4;
+      cursor: pointer;
+    }
+    .lt-checkbox {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--lt-primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Botones temáticos */
+    .lt-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to)) !important;
+      color: #ffffff !important;
+      box-shadow: 0 6px 20px var(--lt-btn-shadow) !important;
+    }
+    .lt-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    .lt-btn-secondary {
+      width: 100%;
+      background: transparent !important;
+      color: var(--lt-title) !important;
+      border: 1.5px solid var(--lt-border) !important;
+      box-shadow: none !important;
+      margin-top: 8px;
+    }
+    .lt-btn-wa {
+      flex: 1;
+      background: linear-gradient(135deg, #25d366, #128c7e) !important;
+      color: #ffffff !important;
+      box-shadow: 0 6px 18px rgba(18, 140, 126, 0.3) !important;
+    }
+
+    /* Questions Screen */
+    .lt-q-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--lt-title);
+    }
+    .lt-progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(200, 200, 220, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .lt-progress-fill {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, var(--lt-btn-from), var(--lt-btn-to));
+      border-radius: 20px;
+      transition: width 0.3s ease;
+    }
+    .lt-question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 3.8vw, 1.15rem);
+      font-weight: 700;
+      color: var(--lt-title);
+      line-height: 1.45;
+      margin-bottom: 16px;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lt-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    .lt-opt-btn {
+      background: rgba(255, 255, 255, 0.65);
+      border: 1.5px solid var(--lt-border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--lt-text);
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.35;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+    body.night-mode .lt-opt-btn {
+      background: rgba(35, 22, 50, 0.65);
+    }
+    .lt-opt-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.015);
+      background: var(--lt-highlight);
+      border-color: var(--lt-primary);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .lt-opt-btn.selected {
+      background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to)) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      box-shadow: 0 6px 18px var(--lt-btn-shadow) !important;
+      transform: scale(1.02);
+    }
+    .lt-point-feedback {
+      min-height: 24px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--lt-title);
+      transition: all 0.3s ease;
+    }
+
+    /* Result Screen */
+    .lt-percentage-badge {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lt-btn-from), var(--lt-btn-to));
+      box-shadow: 0 10px 28px var(--lt-btn-shadow);
+      margin: 12px auto 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      animation: heartbeat 2.5s infinite ease-in-out;
+    }
+    .lt-pct-number {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .lt-pct-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
+    .lt-result-date {
+      font-size: 0.8rem;
+      color: var(--lt-text);
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .lt-verdict-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--lt-text);
+      line-height: 1.55;
+      margin-bottom: 14px;
+      padding: 0 6px;
+    }
+    .lt-summary-card {
+      background: var(--lt-card-bg);
+      border: 1px dashed var(--lt-border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      text-align: left;
+      margin-bottom: 14px;
+    }
+    .lt-summary-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--lt-title);
+      margin-bottom: 8px;
+    }
+    .lt-summary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: var(--lt-text);
+      line-height: 1.35;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .lt-summary-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px dotted rgba(150, 150, 150, 0.2);
+      padding-bottom: 3px;
+    }
+    .lt-summary-item span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .lt-summary-pts {
+      font-weight: 800;
+      color: var(--lt-title);
+      flex-shrink: 0;
+    }
+    .lt-actions-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+    .lt-actions-row .btn-coquette-action {
+      flex: 1;
+      padding: 11px 12px;
+      font-size: 0.86rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
        MODALES BASE (GLASSMORPHISM & COQUETTE BORDER)
        ═══════════════════════════════════════════════════════════════ */
     .modal-overlay {
@@ -2042,6 +2502,15 @@
         <div class="card-subtitle">Léeme con amor 🥺</div>
       </button>
 
+      <!-- 7. Porcentaje de Amor (Test diario Él / Ella) -->
+      <button class="grid-card card-love-test" onclick="openLoveTestModal()">
+        <div class="card-icon-wrap">💘</div>
+        <div>
+          <div class="card-title">Porcentaje de Amor</div>
+          <div class="card-subtitle">Test diario en pareja (Él 💙 / Ella 💗) ✨</div>
+        </div>
+      </button>
+
     </div>
 
     <!-- Widget Interactivo: Notificaciones rápidas y mensajes a Telegram -->
@@ -2390,6 +2859,144 @@
         <div class="pin-key empty"></div>
         <button class="pin-key" onclick="pressPinDigit('0')">0</button>
         <button class="pin-key backspace" onclick="pressPinBackspace()" title="Borrar">⌫</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODAL: PORCENTAJE DE AMOR (TEST DIARIO ÉL / ELLA)
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="loveTestModal">
+    <div class="modal-box love-test-box theme-she" id="loveTestBox">
+      <button class="modal-close-x" onclick="closeLoveTestModal()">✕</button>
+
+      <!-- 1. Pantalla: Ya completado hoy -->
+      <div id="ltScreenAlready" style="display:none;">
+        <div class="modal-icon-big">✨📅✨</div>
+        <h3 class="lt-title">¡Test de hoy completado! 💖</h3>
+        <p class="lt-subtitle" id="ltAlreadyMsg">Ya realizaron el test del Porcentaje de Amor el día de hoy.</p>
+        <div class="lt-card-subtle">
+          <p style="font-size:0.86rem; color:var(--lt-text); line-height:1.5;">
+            Recuerda que este test se reinicia cada día (a medianoche) para que vuelvan a medir su amor mañana. ¡Gracias por amarse tan bonito! 💕
+          </p>
+        </div>
+        <button class="btn-coquette-action lt-btn" onclick="showSavedTestResult()">
+          <span>👁️ Ver mi tarjeta de hoy</span>
+        </button>
+        <button class="btn-coquette-action lt-btn-secondary" onclick="closeLoveTestModal()">
+          <span>Cerrar</span>
+        </button>
+      </div>
+
+      <!-- 2. Pantalla: Desbloqueo, Nombre, Mensaje y Juramento -->
+      <div id="ltScreenSetup">
+        <div class="lt-daily-badge">⚠️ Se reinicia cada día • 1 test diario</div>
+        <div class="modal-icon-big" id="ltSetupIcon">💘</div>
+        <h3 class="lt-title">Porcentaje de Amor</h3>
+        <p class="lt-subtitle">Descubre cuánto amor hay en el aire hoy</p>
+
+        <!-- Selección de turno -->
+        <div class="lt-role-picker">
+          <label class="lt-field-label">¿Quién realiza el test hoy?</label>
+          <div class="lt-role-buttons">
+            <button type="button" class="lt-role-btn" id="ltRoleHe" onclick="selectLoveTestRole('he')">
+              <span>Él 💙</span>
+            </button>
+            <button type="button" class="lt-role-btn active" id="ltRoleShe" onclick="selectLoveTestRole('she')">
+              <span>Ella 💗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Campo Nombre -->
+        <div class="lt-input-group">
+          <label class="lt-field-label" for="ltInputName">Tu nombre o apodo tierno:</label>
+          <input type="text" id="ltInputName" class="lt-text-input" placeholder="Ej. Mi amor, Flaquito, Sarai..." maxlength="30" />
+        </div>
+
+        <!-- Mensaje de Desbloqueo -->
+        <div class="lt-input-group">
+          <label class="lt-field-label" for="ltInputMessage">
+            Mensaje lindo para desbloquear el test:
+          </label>
+          <p class="lt-field-hint">
+            Para desbloquear el test debes escribir un mensaje lindo. ¡Entre más largo y dulce sea tu mensaje, más puntos sumará a tu porcentaje final! ✨
+          </p>
+          <textarea id="ltInputMessage" class="lt-textarea" rows="3" placeholder="Escribe aquí algo lindo para desbloquear..." maxlength="250" oninput="updateLtMessagePoints()"></textarea>
+          <div class="lt-bonus-indicator" id="ltBonusIndicator">
+            Puntos extra: <span id="ltBonusPts">+0 pts</span>
+          </div>
+        </div>
+
+        <!-- Juramento en broma -->
+        <div class="lt-oath-box">
+          <label class="lt-oath-label">
+            <input type="checkbox" id="ltOathCheck" class="lt-checkbox" />
+            <span>Juro solemnemente por Spiderman, las comidas ricas y los abrazos infinitos que responderé con la verdad y nada más que la verdad ✋💖</span>
+          </label>
+        </div>
+
+        <button class="btn-coquette-action lt-btn" id="ltStartBtn" onclick="startLoveTestQuestions()">
+          <span>Comenzar el Test 💘</span>
+        </button>
+      </div>
+
+      <!-- 3. Pantalla: Preguntas dinámicas -->
+      <div id="ltScreenQuestions" style="display:none;">
+        <div class="lt-q-topbar">
+          <span class="lt-q-counter" id="ltQCounter">Pregunta 1 de 5</span>
+          <span class="lt-q-score-preview" id="ltQScorePreview">Puntos: 0</span>
+        </div>
+        <div class="lt-progress-track">
+          <div class="lt-progress-fill" id="ltProgressFill"></div>
+        </div>
+
+        <div class="lt-question-text" id="ltQuestionText"></div>
+
+        <div class="lt-options-list" id="ltOptionsList"></div>
+
+        <div class="lt-point-feedback" id="ltPointFeedback"></div>
+      </div>
+
+      <!-- 4. Pantalla: Resultados y Tarjeta -->
+      <div id="ltScreenResult" style="display:none;">
+        <div class="modal-icon-big">🎉💘✨</div>
+        <h3 class="lt-title" id="ltResultTitle">¡Resultado de Amor!</h3>
+        <p class="lt-result-date" id="ltResultDate"></p>
+
+        <!-- Medidor circular / porcentaje grande -->
+        <div class="lt-percentage-badge">
+          <span class="lt-pct-number" id="ltPctNumber">100%</span>
+          <span class="lt-pct-label">Nivel de Amor</span>
+        </div>
+
+        <p class="lt-verdict-text" id="ltVerdictText"></p>
+
+        <!-- Resumen de Respuestas -->
+        <div class="lt-summary-card">
+          <div class="lt-summary-header">
+            <strong>Desglose de Puntos:</strong> <span id="ltTotalPointsDisplay">0 / 120 pts</span>
+          </div>
+          <div class="lt-summary-list" id="ltSummaryList"></div>
+        </div>
+
+        <!-- Canvas oculto para generar la imagen descargable -->
+        <canvas id="ltCanvas" width="760" height="980" style="display:none;"></canvas>
+
+        <!-- Botones de Acción -->
+        <div class="lt-actions-row">
+          <button class="btn-coquette-action lt-btn" onclick="downloadLoveTestImage()">
+            <span>📥 Descargar Tarjeta</span>
+          </button>
+          <button class="btn-coquette-action lt-btn-wa" onclick="shareLoveTestWhatsApp()">
+            <span>📲 Compartir WhatsApp</span>
+          </button>
+        </div>
+
+        <button class="btn-coquette-action lt-btn-secondary" onclick="closeLoveTestModal()">
+          <span>Cerrar</span>
+        </button>
       </div>
 
     </div>
@@ -2759,11 +3366,14 @@
     }
 
     // Cerrar al tocar fuera del modal
-    ['feelModal', 'radarModal', 'fortuneModal'].forEach(id => {
+    ['feelModal', 'radarModal', 'fortuneModal', 'loveTestModal'].forEach(id => {
       const modal = document.getElementById(id);
       if (modal) {
         modal.addEventListener('click', function(e) {
-          if (e.target === this) closeModal(id);
+          if (e.target === this) {
+            if (id === 'loveTestModal') closeLoveTestModal();
+            else closeModal(id);
+          }
         });
       }
     });
@@ -3582,6 +4192,703 @@
         sendCustomTelegram();
       }
     });
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       18. PORCENTAJE DE AMOR (TEST DIARIO ÉL / ELLA & TARJETA)
+       ═══════════════════════════════════════════════════════════════ */
+    const PREGUNTAS_EL = [
+      {
+        q: "Si hoy llego con un antojo repentino a las 9:00 p. m., ¿cuál es tu reacción?",
+        options: [
+          { text: "De una miro cómo lo resolvemos porque tu felicidad es prioridad", pts: 20 },
+          { text: "Te molesto un rato y luego resuelvo", pts: 15 },
+          { text: "Negociamos", pts: 10 },
+          { text: "Te digo que mañana", pts: 5 }
+        ]
+      },
+      {
+        q: "Cuando se arma una mini discusión o estoy de mal genio, ¿qué haces primero?",
+        options: [
+          { text: "Bajo la guardia, te busco y te doy paz aunque tenga razón", pts: 20 },
+          { text: "Te doy un espacio cortito y luego llego con cariño", pts: 15 },
+          { text: "Intento hacerte reír con alguna bobada", pts: 12 },
+          { text: "Me quedo firme en mi postura hasta que se pase", pts: 5 }
+        ]
+      },
+      {
+        q: "Cuando estamos hablando o jugando juntos y se cruza otra cosa, ¿qué pasa?",
+        options: [
+          { text: "Dejo lo que sea porque tú vas primero", pts: 20 },
+          { text: "Me concentro un ratico, pero suelto rápido cuando me llamas", pts: 15 },
+          { text: "A veces me cuelgo un poquito, pero vuelvo con remordimiento", pts: 10 },
+          { text: "Lo olvido y se me pasa la hora", pts: 5 }
+        ]
+      },
+      {
+        q: "Si tuvieras que definir cuánto te importo hoy, ¿qué dirías?",
+        options: [
+          { text: "Más que a cualquier cosa", pts: 20 },
+          { text: "Demasiado, eres mi lugar favorito", pts: 18 },
+          { text: "Mucho, ya eres parte de mi rutina diaria", pts: 12 },
+          { text: "Lo suficiente como para estar haciendo este test", pts: 8 }
+        ]
+      },
+      {
+        q: "¿Cuál es tu nivel de alcahuetería conmigo?",
+        options: [
+          { text: "Nivel experto: te consiento todo", pts: 20 },
+          { text: "Nivel intermedio: te apapacho y te sigo la corriente", pts: 15 },
+          { text: "Nivel estricto pero tierno: te cuido regañándote bonito", pts: 10 },
+          { text: "Nivel impredecible: depende del humor del día", pts: 5 }
+        ]
+      }
+    ];
+
+    const PREGUNTAS_ELLA = [
+      {
+        q: "Cuando me pongo terco o con ocurrencias raras, ¿cómo reaccionas?",
+        options: [
+          { text: "Te sigo el juego y me río contigo", pts: 20 },
+          { text: "Te regaño con amor pero al rato ya te estoy abrazando", pts: 15 },
+          { text: "Te miro con cara de \"¿qué hiciste ahora?\" y te perdono", pts: 12 },
+          { text: "Te digo que madures pero te quiero igual", pts: 8 }
+        ]
+      },
+      {
+        q: "¿Qué tan rápido se te pasa el mal genio cuando estás brava?",
+        options: [
+          { text: "En un dos por tres si me buscas bonito", pts: 20 },
+          { text: "Depende del nivel de la embarrada, pero no me dura tanto", pts: 15 },
+          { text: "Me hago la difícil un rato para que te esfuerces", pts: 10 },
+          { text: "Necesito tiempo y mimos para descongelarme", pts: 5 }
+        ]
+      },
+      {
+        q: "Si tienes un día pesado o sin ánimos, ¿qué buscas en mí?",
+        options: [
+          { text: "Que estés ahí, me escuches y me des tranquilidad", pts: 20 },
+          { text: "Abrazos largos, besos y compañía sin presión", pts: 18 },
+          { text: "Que me distraigas con charla o algún plan lindo", pts: 12 },
+          { text: "Que me des un espacio tranquilo y luego me apapaches", pts: 8 }
+        ]
+      },
+      {
+        q: "¿Qué tanto me presumes o piensas en mí en un día normal?",
+        options: [
+          { text: "Casi todo el día, apareces en mis pensamientos a cada rato", pts: 20 },
+          { text: "Bastante, siempre tengo algún detalle o mensaje en mente", pts: 15 },
+          { text: "En los ratos libres cuando bajo el ritmo", pts: 10 },
+          { text: "Solo cuando me acuerdo o me llega alguna notificación tuya", pts: 8 }
+        ]
+      },
+      {
+        q: "En nuestra dinámica diaria, ¿cuál es tu fuerte?",
+        options: [
+          { text: "Dar amor intenso, detalles y estar pendiente", pts: 20 },
+          { text: "Llevar la batuta con cariño y ponerle sabor a todo", pts: 15 },
+          { text: "Apoyarte siempre aunque a veces me salga el mal genio", pts: 12 },
+          { text: "Decir las cosas sin filtro pero con mucho cariño", pts: 8 }
+        ]
+      }
+    ];
+
+    let currentLtRole = 'she';
+    let currentLtName = '';
+    let currentLtMessage = '';
+    let currentLtBonusPts = 0;
+    let currentLtQuestions = [];
+    let currentLtQIndex = 0;
+    let currentLtScore = 0;
+    let currentLtAnswers = [];
+    let currentLtResultData = null;
+    let isLtAnswering = false;
+
+    function getTodayDateString() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getFriendlyDateString(isoDate) {
+      try {
+        const [y, m, d] = (isoDate || getTodayDateString()).split('-');
+        const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        return `${parseInt(d, 10)} de ${months[parseInt(m, 10) - 1]} de ${y}`;
+      } catch (e) {
+        return isoDate || '';
+      }
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function calculateMessageBonus(text) {
+      const len = (text || '').trim().length;
+      if (len === 0) return 0;
+      if (len < 15) return 5;
+      if (len < 40) return 10;
+      if (len < 80) return 15;
+      return 20;
+    }
+
+    function openLoveTestModal() {
+      if (!isMusicPlaying) playMusic();
+      openModal('loveTestModal');
+
+      const today = getTodayDateString();
+      const savedDate = localStorage.getItem('cartita_love_test_date');
+
+      if (savedDate === today) {
+        showLoveTestScreen('already');
+      } else {
+        resetLoveTestSetup();
+        showLoveTestScreen('setup');
+      }
+    }
+
+    function closeLoveTestModal() {
+      closeModal('loveTestModal');
+      isLtAnswering = false;
+    }
+
+    function showLoveTestScreen(screenName) {
+      document.getElementById('ltScreenAlready').style.display   = (screenName === 'already') ? 'block' : 'none';
+      document.getElementById('ltScreenSetup').style.display     = (screenName === 'setup') ? 'block' : 'none';
+      document.getElementById('ltScreenQuestions').style.display = (screenName === 'questions') ? 'block' : 'none';
+      document.getElementById('ltScreenResult').style.display    = (screenName === 'result') ? 'block' : 'none';
+    }
+
+    function selectLoveTestRole(role) {
+      currentLtRole = role;
+      const box = document.getElementById('loveTestBox');
+      const btnHe = document.getElementById('ltRoleHe');
+      const btnShe = document.getElementById('ltRoleShe');
+      const icon = document.getElementById('ltSetupIcon');
+
+      if (role === 'he') {
+        box.classList.remove('theme-she');
+        box.classList.add('theme-he');
+        btnHe?.classList.add('active');
+        btnShe?.classList.remove('active');
+        if (icon) icon.textContent = '💙';
+      } else {
+        box.classList.remove('theme-he');
+        box.classList.add('theme-she');
+        btnHe?.classList.remove('active');
+        btnShe?.classList.add('active');
+        if (icon) icon.textContent = '💗';
+      }
+    }
+
+    function updateLtMessagePoints() {
+      const input = document.getElementById('ltInputMessage');
+      const text = input ? input.value : '';
+      const pts = calculateMessageBonus(text);
+      currentLtBonusPts = pts;
+      const ptsEl = document.getElementById('ltBonusPts');
+      if (ptsEl) {
+        ptsEl.textContent = `+${pts} pts`;
+      }
+    }
+
+    function resetLoveTestSetup() {
+      selectLoveTestRole('she');
+      const nameInput = document.getElementById('ltInputName');
+      const msgInput  = document.getElementById('ltInputMessage');
+      const oathCheck = document.getElementById('ltOathCheck');
+      if (nameInput) nameInput.value = '';
+      if (msgInput) msgInput.value = '';
+      if (oathCheck) oathCheck.checked = false;
+      updateLtMessagePoints();
+      isLtAnswering = false;
+    }
+
+    function startLoveTestQuestions() {
+      const nameInput = document.getElementById('ltInputName');
+      const msgInput  = document.getElementById('ltInputMessage');
+      const oathCheck = document.getElementById('ltOathCheck');
+
+      const name = (nameInput?.value || '').trim();
+      const msg  = (msgInput?.value || '').trim();
+
+      if (!name) {
+        alert("Por favor escribe tu lindo nombre o apodo antes de empezar 💕");
+        nameInput?.focus();
+        return;
+      }
+
+      if (msg.length < 5) {
+        alert("Para desbloquear el test debes escribir un mensaje lindo de al menos unas palabras ✨");
+        msgInput?.focus();
+        return;
+      }
+
+      if (!oathCheck?.checked) {
+        alert("Debes aceptar el juramento solemne con la verdad para comenzar ✋💖");
+        return;
+      }
+
+      currentLtName = name;
+      currentLtMessage = msg;
+      currentLtBonusPts = calculateMessageBonus(msg);
+      currentLtScore = currentLtBonusPts;
+      currentLtAnswers = [];
+      isLtAnswering = false;
+
+      // Clona y baraja preguntas y opciones
+      const rawQuestions = currentLtRole === 'he' ? PREGUNTAS_EL : PREGUNTAS_ELLA;
+      currentLtQuestions = shuffleArray(rawQuestions).map(q => ({
+        q: q.q,
+        options: shuffleArray(q.options)
+      }));
+
+      currentLtQIndex = 0;
+      showLoveTestScreen('questions');
+      renderLtQuestion(0);
+    }
+
+    function renderLtQuestion(index) {
+      const q = currentLtQuestions[index];
+      if (!q) return;
+
+      document.getElementById('ltQCounter').textContent = `Pregunta ${index + 1} de ${currentLtQuestions.length}`;
+      document.getElementById('ltQScorePreview').textContent = `Puntos: ${currentLtScore}`;
+
+      const pct = Math.round((index / currentLtQuestions.length) * 100);
+      document.getElementById('ltProgressFill').style.width = pct + '%';
+
+      document.getElementById('ltQuestionText').textContent = q.q;
+
+      const optionsList = document.getElementById('ltOptionsList');
+      optionsList.innerHTML = '';
+
+      const feedbackEl = document.getElementById('ltPointFeedback');
+      feedbackEl.textContent = '';
+      feedbackEl.className = 'lt-point-feedback';
+
+      isLtAnswering = false;
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = 'lt-option-btn';
+        btn.type = 'button';
+        btn.textContent = opt.text;
+
+        btn.onclick = () => handleLtOptionSelect(opt, btn, q.q);
+        optionsList.appendChild(btn);
+      });
+    }
+
+    function handleLtOptionSelect(selectedOpt, clickedBtn, questionText) {
+      if (isLtAnswering) return;
+      isLtAnswering = true;
+
+      playKeyTone(600);
+      currentLtScore += selectedOpt.pts;
+
+      currentLtAnswers.push({
+        q: questionText,
+        selected: selectedOpt.text,
+        pts: selectedOpt.pts
+      });
+
+      clickedBtn.classList.add('selected');
+
+      const badge = document.createElement('span');
+      badge.className = 'lt-opt-pts-badge';
+      badge.textContent = `+${selectedOpt.pts} pts ✨`;
+      clickedBtn.appendChild(badge);
+
+      const feedbackEl = document.getElementById('ltPointFeedback');
+      feedbackEl.textContent = `¡Sumaste +${selectedOpt.pts} puntos de amor! 💖`;
+      feedbackEl.className = 'lt-point-feedback show';
+
+      const allBtns = document.querySelectorAll('#ltOptionsList .lt-option-btn');
+      allBtns.forEach(btn => {
+        btn.disabled = true;
+        if (btn !== clickedBtn) {
+          btn.style.opacity = '0.5';
+        }
+      });
+
+      setTimeout(() => {
+        if (currentLtQIndex + 1 < currentLtQuestions.length) {
+          currentLtQIndex++;
+          renderLtQuestion(currentLtQIndex);
+        } else {
+          finishLoveTest();
+        }
+      }, 900);
+    }
+
+    function finishLoveTest() {
+      const today = getTodayDateString();
+      let pct = Math.min(100, Math.round((currentLtScore / 120) * 100));
+      if (currentLtScore >= 115) pct = 100;
+      if (pct < 70) pct = 70 + Math.floor(Math.random() * 8);
+
+      let verdict = "";
+      if (currentLtRole === 'he') {
+        if (pct >= 95) {
+          verdict = "¡Amor de leyenda! Eres el novio más consentidor, atento y alcahueta del planeta. Tienes el cielo ganado y a tu mujer completamente enamorada. 💙✨";
+        } else if (pct >= 85) {
+          verdict = "¡Amor ultra fuerte! Resuelves, cuidas cada detalle y sabes cómo desarmar cualquier mal genio con ternura. ¡Un amor de diez! 💙🥰";
+        } else {
+          verdict = "¡Amor real y tierno! Aunque a veces te hagas el duro o te cuelgues un ratico, tu corazón está 100% en el lugar correcto. 💙🧸";
+        }
+      } else {
+        if (pct >= 95) {
+          verdict = "¡Reina consentidora! Tu amor es dulce, intenso y único. Aunque a veces saques el genio, tus abrazos curan cualquier cosa en un segundo. 💗✨";
+        } else if (pct >= 85) {
+          verdict = "¡Amor incondicional! Eres el motor dulce de los días, regañas con cariño y tus mimos son la recarga perfecta de energía. 💗🥰";
+        } else {
+          verdict = "¡Amor auténtico y leal! Te haces la difícil un ratico para que te consientan, pero tu corazón siempre busca paz y apapacho. 💗🧸";
+        }
+      }
+
+      const testData = {
+        role: currentLtRole,
+        name: currentLtName,
+        message: currentLtMessage,
+        bonusPts: currentLtBonusPts,
+        score: currentLtScore,
+        percentage: pct,
+        verdict: verdict,
+        answers: currentLtAnswers,
+        date: today,
+        friendlyDate: getFriendlyDateString(today)
+      };
+
+      try {
+        localStorage.setItem('cartita_love_test_date', today);
+        localStorage.setItem('cartita_love_test_data', JSON.stringify(testData));
+      } catch (e) {
+        console.warn("localStorage error:", e);
+      }
+
+      currentLtResultData = testData;
+
+      playWinSound();
+      burstHearts(document.getElementById('loveTestBox'));
+
+      renderLoveTestResult(testData);
+      generateLoveTestCanvas(testData);
+      showLoveTestScreen('result');
+    }
+
+    function showSavedTestResult() {
+      try {
+        const savedJson = localStorage.getItem('cartita_love_test_data');
+        if (savedJson) {
+          const data = JSON.parse(savedJson);
+          currentLtResultData = data;
+          selectLoveTestRole(data.role || 'she');
+          renderLoveTestResult(data);
+          generateLoveTestCanvas(data);
+          showLoveTestScreen('result');
+          return;
+        }
+      } catch (e) {
+        console.error("Error reading saved test:", e);
+      }
+      resetLoveTestSetup();
+      showLoveTestScreen('setup');
+    }
+
+    function renderLoveTestResult(data) {
+      const titleEl = document.getElementById('ltResultTitle');
+      const dateEl  = document.getElementById('ltResultDate');
+      const pctEl   = document.getElementById('ltPctNumber');
+      const verdEl  = document.getElementById('ltVerdictText');
+      const ptsEl   = document.getElementById('ltTotalPointsDisplay');
+      const listEl  = document.getElementById('ltSummaryList');
+
+      const roleLabel = data.role === 'he' ? 'Él 💙' : 'Ella 💗';
+      titleEl.textContent = `¡Resultado de Amor de ${data.name}!`;
+      dateEl.textContent  = `Turno: ${roleLabel} • Fecha: ${data.friendlyDate}`;
+      pctEl.textContent   = `${data.percentage}%`;
+      verdEl.textContent  = data.verdict;
+      ptsEl.textContent   = `${data.score} / 120 pts`;
+
+      listEl.innerHTML = '';
+
+      const bonusItem = document.createElement('div');
+      bonusItem.className = 'lt-summary-item';
+      bonusItem.innerHTML = `<span>💌 Mensaje dulce de desbloqueo:</span> <strong>+${data.bonusPts} pts</strong>`;
+      listEl.appendChild(bonusItem);
+
+      (data.answers || []).forEach((ans, idx) => {
+        const item = document.createElement('div');
+        item.className = 'lt-summary-item';
+        item.innerHTML = `<span>P${idx + 1}: ${ans.selected}</span> <strong>+${ans.pts} pts</strong>`;
+        listEl.appendChild(item);
+      });
+    }
+
+    /* Helper canvas: dibujar rectángulo redondeado */
+    function drawLtRoundRect(ctx, x, y, w, h, r, fill, stroke) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      if (fill) ctx.fill();
+      if (stroke) ctx.stroke();
+    }
+
+    /* Helper canvas: salto de línea para textos largos */
+    function wrapLtText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 4) {
+      const words = (text || '').split(' ');
+      let line = '';
+      let currentY = y;
+      let linesCount = 0;
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          ctx.fillText(line.trim(), x, currentY);
+          line = words[n] + ' ';
+          currentY += lineHeight;
+          linesCount++;
+          if (linesCount >= maxLines - 1 && n + 1 < words.length) {
+            ctx.fillText((line + '...').trim(), x, currentY);
+            return currentY + lineHeight;
+          }
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line.trim(), x, currentY);
+      return currentY + lineHeight;
+    }
+
+    /* Generación de Tarjeta Gráfica en Canvas HD (760 x 980) SIN PIE DE TARJETA */
+    function generateLoveTestCanvas(data) {
+      const canvas = document.getElementById('ltCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = 760;
+      const h = 980;
+      canvas.width = w;
+      canvas.height = h;
+
+      const isHe = data.role === 'he';
+      const roleLabel = isHe ? 'Él 💙' : 'Ella 💗';
+
+      // Paletas por rol
+      const primaryColor = isHe ? '#1f487e' : '#b83b63';
+      const accentColor  = isHe ? '#3b70b5' : '#db5c88';
+      const softBorder   = isHe ? 'rgba(59, 112, 181, 0.35)' : 'rgba(219, 92, 136, 0.35)';
+      const cardBg       = 'rgba(255, 255, 255, 0.94)';
+      const textColor    = '#2d3748';
+      const mutedColor   = '#64748b';
+
+      // 1. Fondo suave con degradado
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      if (isHe) {
+        bgGrad.addColorStop(0, '#ebf3fc');
+        bgGrad.addColorStop(0.5, '#f5f9ff');
+        bgGrad.addColorStop(1, '#dbe9f9');
+      } else {
+        bgGrad.addColorStop(0, '#fff0f5');
+        bgGrad.addColorStop(0.5, '#fff7fa');
+        bgGrad.addColorStop(1, '#fcdbe5');
+      }
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Marco exterior coquette
+      ctx.strokeStyle = softBorder;
+      ctx.lineWidth = 2.5;
+      drawLtRoundRect(ctx, 24, 24, w - 48, h - 48, 28, false, true);
+
+      // 3. Marco interior punteado
+      ctx.save();
+      ctx.setLineDash([7, 7]);
+      ctx.strokeStyle = isHe ? 'rgba(59, 112, 181, 0.25)' : 'rgba(219, 92, 136, 0.25)';
+      ctx.lineWidth = 1.5;
+      drawLtRoundRect(ctx, 36, 36, w - 72, h - 72, 22, false, true);
+      ctx.restore();
+
+      // 4. Encabezado
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 15px "Quicksand", sans-serif';
+      ctx.fillStyle = accentColor;
+      ctx.fillText('✨ TEST DE PAREJA • PORCENTAJE DE AMOR ✨', w / 2, 80);
+
+      ctx.font = 'bold 34px "Playfair Display", "Great Vibes", serif';
+      ctx.fillStyle = primaryColor;
+      ctx.fillText(data.name, w / 2, 120);
+
+      ctx.font = '500 14px "Quicksand", sans-serif';
+      ctx.fillStyle = mutedColor;
+      ctx.fillText(`Turno: ${roleLabel} • Fecha: ${data.friendlyDate}`, w / 2, 146);
+
+      // 5. Círculo de Porcentaje Central
+      const cx = w / 2;
+      const cy = 245;
+      const cr = 68;
+
+      ctx.save();
+      ctx.shadowColor = isHe ? 'rgba(59, 112, 181, 0.3)' : 'rgba(219, 92, 136, 0.3)';
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(cx, cy, cr, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      ctx.strokeStyle = accentColor;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(cx, cy, cr, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 50px "Quicksand", sans-serif';
+      ctx.fillStyle = primaryColor;
+      ctx.fillText(`${data.percentage}%`, cx, cy + 14);
+
+      ctx.font = 'bold 12px "Quicksand", sans-serif';
+      ctx.fillStyle = accentColor;
+      ctx.fillText('NIVEL DE AMOR CERTIFICADO ✨', cx, cy + cr + 24);
+
+      // 6. Tarjeta: Mensaje de desbloqueo entre comillas
+      const qBoxY = 365;
+      const qBoxH = 110;
+      ctx.fillStyle = cardBg;
+      ctx.strokeStyle = softBorder;
+      ctx.lineWidth = 1.5;
+      drawLtRoundRect(ctx, 56, qBoxY, w - 112, qBoxH, 16, true, true);
+
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 13px "Quicksand", sans-serif';
+      ctx.fillStyle = primaryColor;
+      ctx.fillText('💌 Mensaje de desbloqueo:', 76, qBoxY + 28);
+
+      ctx.font = 'italic 14px "Quicksand", sans-serif';
+      ctx.fillStyle = textColor;
+      wrapLtText(ctx, `"${data.message}"`, 76, qBoxY + 54, w - 152, 22, 3);
+
+      // 7. Tarjeta: Veredicto de Amor
+      const vBoxY = 495;
+      const vBoxH = 115;
+      ctx.fillStyle = cardBg;
+      ctx.strokeStyle = softBorder;
+      ctx.lineWidth = 1.5;
+      drawLtRoundRect(ctx, 56, vBoxY, w - 112, vBoxH, 16, true, true);
+
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 13px "Quicksand", sans-serif';
+      ctx.fillStyle = primaryColor;
+      ctx.fillText('💖 Veredicto Oficial:', 76, vBoxY + 28);
+
+      ctx.font = '500 14px "Quicksand", sans-serif';
+      ctx.fillStyle = textColor;
+      wrapLtText(ctx, data.verdict, 76, vBoxY + 54, w - 152, 22, 3);
+
+      // 8. Tarjeta: Desglose de Puntos
+      const dBoxY = 630;
+      const dBoxH = 285;
+      ctx.fillStyle = cardBg;
+      ctx.strokeStyle = softBorder;
+      ctx.lineWidth = 1.5;
+      drawLtRoundRect(ctx, 56, dBoxY, w - 112, dBoxH, 16, true, true);
+
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 14px "Quicksand", sans-serif';
+      ctx.fillStyle = primaryColor;
+      ctx.fillText(`Puntaje Total: ${data.score} / 120 pts`, 76, dBoxY + 28);
+
+      ctx.textAlign = 'right';
+      ctx.font = 'bold 13px "Quicksand", sans-serif';
+      ctx.fillStyle = accentColor;
+      ctx.fillText(`(+${data.bonusPts} pts por mensaje dulce)`, w - 76, dBoxY + 28);
+
+      // Línea divisoria
+      ctx.strokeStyle = softBorder;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(76, dBoxY + 40);
+      ctx.lineTo(w - 76, dBoxY + 40);
+      ctx.stroke();
+
+      // Lista de respuestas
+      let itemY = dBoxY + 68;
+      (data.answers || []).forEach((ans, idx) => {
+        ctx.textAlign = 'left';
+        ctx.font = '500 13px "Quicksand", sans-serif';
+        ctx.fillStyle = textColor;
+        let optSnippet = ans.selected || '';
+        if (optSnippet.length > 58) {
+          optSnippet = optSnippet.substring(0, 56) + '...';
+        }
+        ctx.fillText(`P${idx + 1}: ${optSnippet}`, 76, itemY);
+
+        ctx.textAlign = 'right';
+        ctx.font = 'bold 13px "Quicksand", sans-serif';
+        ctx.fillStyle = accentColor;
+        ctx.fillText(`+${ans.pts} pts`, w - 76, itemY);
+
+        itemY += 44;
+      });
+
+      // NOTA: NO SE COLOCA PIE DE TARJETA INFERIOR (CUMPLE REQUERIMIENTO ESTRICTO)
+    }
+
+    function downloadLoveTestImage() {
+      const canvas = document.getElementById('ltCanvas');
+      if (!canvas) return;
+      try {
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        const cleanName = (currentLtResultData?.name || 'Amor').replace(/\s+/g, '_');
+        const today = currentLtResultData?.date || getTodayDateString();
+        a.download = `Porcentaje-Amor-${cleanName}-${today}.png`;
+        a.href = url;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        playKeyTone(700);
+      } catch (e) {
+        console.error("Error downloading canvas image:", e);
+      }
+    }
+
+    function shareLoveTestWhatsApp() {
+      if (!currentLtResultData) return;
+      const d = currentLtResultData;
+      const roleLabel = d.role === 'he' ? 'Él 💙' : 'Ella 💗';
+      const text = 
+`💘 *Resultado de Amor en Nuestra Cartita* 💘
+👤 *Nombre:* ${d.name} (${roleLabel})
+📅 *Fecha:* ${d.friendlyDate}
+✨ *Porcentaje de Amor:* ${d.percentage}% (${d.score}/120 pts)
+💬 *Mensaje de desbloqueo:* "${d.message}"
+💌 *Veredicto:* ${d.verdict}
+
+¡Te amo infinitamente mi vida! 💕`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMERO}?text=` + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+
 
   </script>
 </body>
